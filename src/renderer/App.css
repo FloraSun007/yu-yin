@@ -1,0 +1,33 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body, #root {
+  width: 100%; height: 100%;
+  background: transparent;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+}
+
+.app {
+  width: 100%; height: 100%;
+  background: rgba(18, 18, 24, 0.95);
+  border-radius: 8px;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  color: #e0e0e0;
+  user-select: none;
+  position: relative;
+}
+
+.module-tabs {
+  display: flex; gap: 0; flex-shrink: 0;
+  background: rgba(18, 18, 24, 0.8);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 0 8px;
+}
+.module-tab {
+  padding: 6px 16px; font-size: 12px; color: #888;
+  background: transparent; border: none; border-bottom: 2px solid transparent;
+  cursor: pointer; transition: all 0.15s;
+}
+.module-tab.active { color: #4285f4; border-bottom-color: #4285f4; }
+.module-tab:hover { color: #ccc; }

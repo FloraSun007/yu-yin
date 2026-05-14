@@ -1,0 +1,12 @@
+appId: com.yuyin.app
+productName: 鱼隐
+copyright: Copyright © 2026
+directories:
+  output: release
+  buildResources: assets
+files:
+  - dist/**/*
+win:
+  target:
+    - target: portable
+      arch: [x64]

@@ -1,0 +1,235 @@
+/* ---- Source home (main area when no source playing) ---- */
+.source-home {
+  flex: 1; display: flex; flex-direction: column;
+  background: rgba(18, 18, 24, 0.95);
+}
+.source-home-scroll {
+  flex: 1; overflow-y: auto; padding: 8px 0;
+}
+.source-home-footer {
+  padding: 8px 12px; font-size: 12px; color: #777;
+  text-align: center; flex-shrink: 0;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.source-section { margin-bottom: 12px; }
+.source-section-title {
+  font-size: 12px; color: #999; text-transform: uppercase;
+  letter-spacing: 0.5px; padding: 6px 12px; font-weight: 600;
+}
+
+.source-item {
+  padding: 6px 12px; cursor: pointer; display: flex;
+  align-items: center; gap: 6px; transition: background 0.15s;
+}
+.source-item:hover { background: rgba(255,255,255,0.05); }
+.source-item.active { background: rgba(66,133,244,0.15); }
+.source-name { font-size: 12px; color: #ccc; flex: 1; }
+.source-name.url { font-size: 10px; color: #888; word-break: break-all; }
+.source-note { font-size: 9px; color: #666; background: rgba(255,255,255,0.05); padding: 1px 4px; border-radius: 2px; }
+.source-backup { font-size: 9px; color: #4285f4; background: rgba(66,133,244,0.15); padding: 1px 4px; border-radius: 2px; }
+.source-remove { color: #666; cursor: pointer; font-size: 14px; }
+.source-remove:hover { color: #e81123; }
+
+.source-switching {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 12px; font-size: 11px; color: #f59e0b;
+}
+.switching-spinner {
+  width: 12px; height: 12px; border: 2px solid rgba(245,158,11,0.3);
+  border-top-color: #f59e0b; border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.source-add { padding: 6px 12px; }
+.source-add-input {
+  width: 100%; height: 30px; background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12); border-radius: 4px;
+  color: #ccc; padding: 0 8px; font-size: 12px; outline: none;
+}
+.source-add-input::placeholder { color: #777; }
+.source-add-input:focus { border-color: #4285f4; }
+
+/* ---- Main content ---- */
+.main-content {
+  flex: 1; display: flex; flex-direction: column;
+  overflow: hidden; position: relative;
+}
+
+.player-area { flex: 1; overflow: hidden; background: #000; position: relative; }
+.player-area video { width: 100%; height: 100%; object-fit: contain; display: block; }
+.webpage-player { width: 100%; height: 100%; }
+
+/* ---- Controls wrapper ---- */
+.controls-wrapper {
+  display: flex; align-items: center; gap: 0; flex-shrink: 0;
+  background: rgba(0,0,0,0.3);
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.controls {
+  flex: 1; height: 40px; display: flex; align-items: center;
+  padding: 0 10px; gap: 8px;
+}
+
+.ctrl-btn {
+  width: 28px; height: 28px; border: none; border-radius: 4px;
+  background: transparent; color: #ccc; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: all 0.15s;
+}
+.ctrl-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+.progress-bar, .volume-slider {
+  height: 4px; background: rgba(255,255,255,0.15); border-radius: 2px;
+  cursor: pointer; position: relative; transition: height 0.15s;
+}
+.progress-bar:hover, .volume-slider:hover { height: 6px; }
+.progress-bar { flex: 1; }
+.volume-slider { width: 60px; flex-shrink: 0; }
+.progress-fill, .volume-fill { height: 100%; background: #4285f4; border-radius: 2px; pointer-events: none; }
+.time-display { font-size: 11px; color: #888; min-width: 76px; text-align: center; flex-shrink: 0; font-variant-numeric: tabular-nums; }
+
+/* ---- Size presets ---- */
+.size-presets { display: flex; gap: 2px; padding: 0 8px; }
+.size-btn {
+  font-size: 10px; padding: 2px 8px; border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 3px; background: transparent; color: #888; cursor: pointer;
+  transition: all 0.15s;
+}
+.size-btn:hover { color: #fff; border-color: rgba(255,255,255,0.3); }
+
+/* ============================================================
+   THEME CSS (VS Code, Excel, System Update, Email)
+   ============================================================ */
+
+/* VS Code */
+.theme-vscode {
+  width: 100%; height: 100%; display: flex; flex-direction: column;
+  background: #1e1e1e; color: #ccc;
+  font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; font-size: 13px;
+}
+.vsc-titlebar { height: 30px; background: #323233; display: flex; align-items: center; padding: 0 8px; gap: 12px; }
+.vsc-menu { display: flex; gap: 8px; font-size: 12px; color: #ccc; }
+.vsc-title-text { flex: 1; text-align: center; font-size: 11px; color: #888; }
+.vsc-window-btns { display: flex; gap: 0; }
+.vsc-win-btn { width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; color: #999; font-size: 12px; }
+.vsc-win-btn.close:hover { background: #e81123; color: #fff; }
+.vsc-body { flex: 1; display: flex; overflow: hidden; }
+.vsc-activity { width: 48px; background: #333; display: flex; flex-direction: column; align-items: center; padding-top: 8px; gap: 4px; }
+.vsc-act-icon { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; color: #888; font-size: 16px; cursor: pointer; }
+.vsc-act-icon.active { color: #fff; border-left: 2px solid #fff; }
+.vsc-sidebar { width: 200px; background: #252526; overflow-y: auto; font-size: 12px; }
+.vsc-sidebar-title { padding: 8px 12px; font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
+.vsc-tree { padding-bottom: 12px; }
+.vsc-item { padding: 1px 8px; white-space: nowrap; cursor: pointer; }
+.vsc-item:hover { background: #2a2d2e; }
+.vsc-item.active { background: #37373d; }
+.vsc-item.file { color: #999; padding-left: 24px; }
+.vsc-item.folder { color: #ccc; }
+.vsc-editor { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.vsc-tabs { height: 30px; background: #252526; display: flex; border-bottom: 1px solid #1e1e1e; }
+.vsc-tab { padding: 0 10px; height: 100%; display: flex; align-items: center; gap: 6px; font-size: 12px; color: #888; border-right: 1px solid #1e1e1e; cursor: pointer; }
+.vsc-tab.active { background: #1e1e1e; color: #fff; }
+.vsc-tab-icon { font-size: 9px; background: #3b78db; color: #fff; padding: 1px 4px; border-radius: 2px; }
+.vsc-tab-close { font-size: 14px; color: #666; margin-left: 4px; }
+.vsc-code { flex: 1; padding: 4px 0; overflow: hidden; font-family: Consolas, 'Courier New', monospace; font-size: 13px; line-height: 1.6; }
+.vsc-line { padding: 0 12px 0 0; white-space: pre; }
+.vsc-ln { display: inline-block; width: 36px; text-align: right; padding-right: 12px; color: #5a5a5a; }
+.vsc-kw-inline { color: #c586c0; }
+.vsc-str { color: #ce9178; }
+.vsc-type { color: #4ec9b0; }
+.vsc-fn { color: #dcdcaa; }
+.vsc-statusbar { height: 22px; background: #007acc; display: flex; align-items: center; padding: 0 8px; gap: 12px; font-size: 11px; color: #fff; }
+
+/* Excel */
+.theme-excel { width: 100%; height: 100%; display: flex; flex-direction: column; background: #fff; color: #333; font-size: 12px; }
+.xl-titlebar { height: 28px; background: #217346; display: flex; align-items: center; justify-content: space-between; padding: 0 8px; color: #fff; font-size: 11px; }
+.xl-titlebar-left { display: flex; align-items: center; gap: 8px; }
+.xl-titlebar-right { display: flex; }
+.xl-titlebar-right span { width: 30px; height: 28px; display: flex; align-items: center; justify-content: center; }
+.xl-titlebar-right span:hover { background: rgba(255,255,255,0.1); }
+.xl-app-icon { font-weight: bold; }
+.xl-title-menu { color: rgba(255,255,255,0.7); }
+.xl-title-name { font-weight: 500; }
+.xl-ribbon-tabs { height: 28px; background: #f3f3f3; display: flex; align-items: end; border-bottom: 1px solid #d1d1d1; padding: 0 8px; gap: 0; }
+.xl-rtab { padding: 4px 12px; font-size: 11px; color: #666; cursor: pointer; border: 1px solid transparent; border-bottom: none; }
+.xl-rtab.active { background: #fff; color: #217346; border-color: #d1d1d1; }
+.xl-rtab:hover { color: #333; }
+.xl-ribbon { height: 36px; background: #fff; border-bottom: 1px solid #d1d1d1; display: flex; align-items: center; padding: 0 8px; gap: 8px; }
+.xl-ribbon-group { display: flex; align-items: center; gap: 4px; }
+.xl-ribbon-buttons { display: flex; gap: 2px; }
+.xl-rbtn { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border: 1px solid transparent; border-radius: 2px; color: #555; cursor: pointer; font-size: 12px; }
+.xl-rbtn:hover { border-color: #c8c8c8; background: #e8e8e8; }
+.xl-ribbon-label { font-size: 9px; color: #999; padding: 0 4px; }
+.xl-formula-bar { height: 24px; background: #fff; border-bottom: 1px solid #d1d1d1; display: flex; align-items: center; padding: 0 4px; gap: 4px; }
+.xl-fx { color: #666; font-style: italic; font-size: 12px; padding: 0 4px; border-right: 1px solid #d1d1d1; }
+.xl-formula-input { font-size: 11px; color: #333; }
+.xl-grid-container { flex: 1; overflow: auto; background: #fff; }
+.xl-grid { border-collapse: collapse; width: 100%; table-layout: fixed; }
+.xl-grid th, .xl-grid td { border: 1px solid #d1d1d1; padding: 2px 6px; text-align: left; font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.xl-corner { background: #f3f3f3; width: 36px; }
+.xl-col-header { background: #f3f3f3; color: #666; text-align: center; font-weight: 500; width: 90px; }
+.xl-row-header { background: #f3f3f3; color: #666; text-align: center; width: 36px; }
+.xl-header-row { background: #e8f0e8; font-weight: 500; }
+.xl-active { border: 2px solid #217346; }
+.xl-sheet-tabs { height: 26px; background: #f3f3f3; display: flex; align-items: center; padding: 0 8px; gap: 0; border-top: 1px solid #d1d1d1; }
+.xl-sheet-tab { padding: 3px 12px; font-size: 11px; color: #666; border: 1px solid #d1d1d1; border-bottom: none; background: #fff; cursor: pointer; }
+.xl-sheet-tab.active { background: #fff; color: #217346; font-weight: 500; }
+.xl-sheet-add { padding: 3px 8px; color: #999; cursor: pointer; font-size: 14px; }
+.xl-statusbar { height: 22px; background: #217346; display: flex; align-items: center; padding: 0 8px; gap: 16px; font-size: 10px; color: rgba(255,255,255,0.8); }
+
+/* System Update */
+.theme-system-update { width: 100%; height: 100%; background: #0078d4; }
+.su-overlay { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #005a9e 0%, #0078d4 50%, #0063b1 100%); }
+.su-dialog { text-align: center; color: #fff; }
+.su-logo { margin-bottom: 24px; }
+.su-title { font-size: 22px; font-weight: 300; margin-bottom: 12px; }
+.su-subtitle { font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 4px; }
+.su-progress-container { margin: 28px auto; max-width: 260px; }
+.su-progress-track { width: 100%; height: 3px; background: rgba(255,255,255,0.2); border-radius: 2px; overflow: hidden; }
+.su-progress-fill { width: 35%; height: 100%; background: #fff; border-radius: 2px; animation: su-progress 4s ease-in-out infinite; }
+@keyframes su-progress { 0% { width: 5%; } 50% { width: 65%; } 100% { width: 95%; } }
+.su-percent { margin-top: 10px; font-size: 14px; color: rgba(255,255,255,0.8); }
+.su-status { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 16px; }
+
+/* Email */
+.theme-email { width: 100%; height: 100%; display: flex; flex-direction: column; background: #fff; color: #333; font-size: 12px; }
+.em-titlebar { height: 30px; background: #0078d4; display: flex; align-items: center; padding: 0 8px; gap: 8px; color: #fff; font-size: 12px; }
+.em-title-icon { font-size: 14px; }
+.em-title-name { flex: 1; font-weight: 500; }
+.em-titlebar-right { display: flex; }
+.em-titlebar-right span { width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.em-titlebar-right span:hover { background: rgba(255,255,255,0.1); }
+.em-toolbar { height: 36px; background: #f3f3f3; display: flex; align-items: center; padding: 0 8px; gap: 4px; border-bottom: 1px solid #d1d1d1; }
+.em-tbtn { padding: 4px 10px; font-size: 11px; color: #555; cursor: pointer; border: 1px solid transparent; border-radius: 3px; }
+.em-tbtn:first-child { background: #0078d4; color: #fff; border-radius: 3px; }
+.em-tbtn:hover { background: #e5e5e5; }
+.em-tbtn:first-child:hover { background: #106ebe; }
+.em-search { flex: 1; margin-left: 12px; padding: 4px 8px; background: #fff; border: 1px solid #d1d1d1; border-radius: 3px; font-size: 11px; color: #999; }
+.em-body { flex: 1; display: flex; overflow: hidden; }
+.em-sidebar { width: 160px; background: #fafafa; border-right: 1px solid #e5e5e5; overflow-y: auto; }
+.em-account { padding: 10px 12px; font-size: 11px; color: #666; border-bottom: 1px solid #e5e5e5; }
+.em-folder { padding: 6px 12px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+.em-folder:hover { background: #e8e8e8; }
+.em-folder.active { background: #e0e0e0; font-weight: 500; }
+.em-folder-name { font-size: 12px; }
+.em-folder-badge { font-size: 10px; background: #0078d4; color: #fff; padding: 1px 5px; border-radius: 8px; }
+.em-list { width: 240px; border-right: 1px solid #e5e5e5; overflow-y: auto; }
+.em-item { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; cursor: pointer; }
+.em-item:hover { background: #f5f5f5; }
+.em-item.selected { background: #e8f0fe; }
+.em-item.unread .em-item-from { font-weight: 700; }
+.em-item-from { font-size: 12px; color: #333; }
+.em-item-subject { font-size: 11px; color: #666; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.em-item-time { font-size: 10px; color: #999; margin-top: 2px; }
+.em-preview { flex: 1; overflow-y: auto; padding: 16px; background: #fff; }
+.em-preview-header { margin-bottom: 12px; border-bottom: 1px solid #e5e5e5; padding-bottom: 12px; }
+.em-preview-from { font-size: 14px; font-weight: 600; }
+.em-preview-to { font-size: 11px; color: #888; margin-top: 2px; }
+.em-preview-time { font-size: 11px; color: #888; margin-top: 2px; }
+.em-preview-subject { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
+.em-preview-body { font-size: 13px; line-height: 1.8; color: #444; }
+.em-preview-body p { margin-bottom: 8px; }
+.em-statusbar { height: 22px; background: #f3f3f3; display: flex; align-items: center; padding: 0 12px; gap: 16px; font-size: 10px; color: #888; border-top: 1px solid #e5e5e5; }

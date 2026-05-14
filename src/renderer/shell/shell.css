@@ -1,0 +1,109 @@
+/* ---- Top bar ---- */
+.top-bar {
+  position: relative; z-index: 20;
+  height: 32px;
+  display: flex; align-items: center;
+  padding: 0 6px; flex-shrink: 0;
+  background: rgba(18, 18, 24, 0.6);
+  backdrop-filter: blur(8px);
+}
+.top-bar-left { display: flex; align-items: center; gap: 6px; }
+.top-bar-spacer { flex: 1; height: 100%; cursor: grab; }
+.top-bar-spacer:active { cursor: grabbing; }
+.top-bar-buttons {
+  display: none;
+  gap: 3px; align-items: center;
+}
+.top-bar:hover .top-bar-buttons { display: flex; }
+.top-bar-btn.back-btn { display: none; }
+.top-bar:hover .top-bar-btn.back-btn { display: flex; }
+
+.top-bar-btn {
+  width: 24px; height: 24px; border: none; border-radius: 4px;
+  background: transparent; color: #888; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; transition: all 0.15s;
+}
+.top-bar-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+.top-bar-btn.close:hover { background: #e81123; color: #fff; }
+.top-bar-btn.back-btn { margin-right: 2px; -webkit-app-region: no-drag; }
+
+.app-logo {
+  font-size: 13px; font-weight: 700; color: #4285f4;
+  letter-spacing: 1px; padding: 0 4px;
+}
+
+.mode-badge {
+  font-size: 10px; padding: 2px 6px; border-radius: 3px;
+  font-weight: 600; letter-spacing: 0.3px;
+}
+.mode-badge.work { background: rgba(52,168,83,0.2); color: #34a853; }
+
+.mode-toggle { font-size: 14px; }
+
+.theme-selector { display: flex; gap: 2px; }
+.theme-btn {
+  font-size: 10px; padding: 2px 6px; border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 3px; background: transparent; color: #888; cursor: pointer;
+  transition: all 0.15s;
+}
+.theme-btn.active { background: rgba(66,133,244,0.3); color: #4285f4; border-color: #4285f4; }
+.theme-btn:hover { color: #fff; }
+.theme-btn.locked { opacity: 0.6; }
+.theme-btn.locked:hover { color: #f59e0b; border-color: #f59e0b; }
+
+/* ---- Hover zone ---- */
+.hover-zone {
+  position: absolute; top: 0; left: 0; width: 5px; height: 100%;
+  z-index: 25; cursor: default;
+}
+
+/* ---- Theme overlay ---- */
+.theme-overlay {
+  position: absolute; inset: 0; z-index: 10;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.theme-visible { opacity: 1; pointer-events: auto; }
+.theme-hidden  { opacity: 0; pointer-events: none; }
+
+/* ---- Theme lock overlay ---- */
+.theme-lock-overlay {
+  position: absolute; inset: 0; display: flex; align-items: center;
+  justify-content: center; background: rgba(0,0,0,0.7); backdrop-filter: blur(6px);
+}
+.theme-lock-dialog { text-align: center; color: #ccc; }
+.theme-lock-icon { font-size: 32px; margin-bottom: 8px; }
+.theme-lock-title { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+.theme-lock-desc { font-size: 12px; color: #888; }
+
+/* ---- Unlock dialog ---- */
+.unlock-overlay {
+  position: absolute; inset: 0; z-index: 30;
+  background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+}
+.unlock-dialog {
+  background: #1e1e2e; border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px; padding: 24px; width: 260px; text-align: center;
+}
+.unlock-title { font-size: 16px; font-weight: 600; color: #e0e0e0; margin-bottom: 8px; }
+.unlock-desc { font-size: 12px; color: #888; margin-bottom: 16px; }
+.unlock-input {
+  width: 100%; height: 32px; background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.15); border-radius: 4px;
+  color: #e0e0e0; padding: 0 10px; font-size: 13px; outline: none;
+  margin-bottom: 12px;
+}
+.unlock-input:focus { border-color: #4285f4; }
+.unlock-actions { display: flex; gap: 8px; justify-content: center; }
+.unlock-btn {
+  padding: 6px 20px; border: none; border-radius: 4px;
+  font-size: 12px; cursor: pointer; transition: all 0.15s;
+}
+.unlock-btn:first-child { background: #4285f4; color: #fff; }
+.unlock-btn:first-child:hover { background: #3b78db; }
+.unlock-btn.cancel { background: rgba(255,255,255,0.08); color: #888; }
+.unlock-btn.cancel:hover { background: rgba(255,255,255,0.12); }
