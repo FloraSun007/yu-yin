@@ -1,9 +1,10 @@
 # 鱼隐 (YuYin) — 产品需求文档 (PRD)
 
 > 版本: 1.0.0
-> 更新日期: 2026-05-14
+> 更新日期: 2026-05-16
 > 文档说明: 模块化 PRD 总览，各子系统详见子文档
 > 发布仓库: https://github.com/FloraSun007/yu-yin
+> 官网下载: https://florasun007.github.io/yu-yin/
 
 ---
 
@@ -108,7 +109,9 @@ ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/
 
 ### 5.3 分发渠道
 
-- **GitHub Releases**（主渠道）：https://github.com/FloraSun007/yu-yin/releases
+- **官网下载页**（面向普通用户）：https://florasun007.github.io/yu-yin/
+- **GitHub Releases**（开发者/备份）：https://github.com/FloraSun007/yu-yin/releases
+- 官网由 GitHub Pages 托管，源文件为 `docs/index.html`，随仓库自动部署
 - 用户下载 Portable exe 后双击运行，Windows 可能提示"未知发布者"（无代码签名证书）
 - 发布包附带 `使用说明.txt`
 
@@ -122,3 +125,4 @@ ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/
 | 0.2.0 | 2026-05-14 | 模块化拆分，新增小说模块占位文档 |
 | 0.3.0 | 2026-05-14 | 新增小说阅读模块（起点、七猫），模块 Tab 切换 |
 | 1.0.0 | 2026-05-14 | 首次正式发布：应用图标、README、使用说明、GitHub Releases 发布流程 |
+| 1.0.1 | 2026-05-16 | 新增 GitHub Pages 官网下载页，PRD 文档同步更新 |
