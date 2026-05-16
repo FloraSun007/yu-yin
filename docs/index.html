@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>鱼隐 - 隐蔽观赛与阅读</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, 'Microsoft YaHei', 'Segoe UI', sans-serif; background: #0d1117; color: #e0e0e0; line-height: 1.7; }
+a { color: #58a6ff; text-decoration: none; }
+
+.hero { text-align: center; padding: 80px 20px 60px; }
+.hero h1 { font-size: 48px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+.hero h1 span { color: #4285f4; }
+.hero p { font-size: 18px; color: #8b949e; max-width: 500px; margin: 0 auto 32px; }
+
+.download-btn {
+  display: inline-block; padding: 14px 40px; font-size: 18px; font-weight: 600;
+  background: #4285f4; color: #fff; border-radius: 8px; border: none; cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+.download-btn:hover { background: #3b78e7; transform: translateY(-1px); }
+.download-btn:active { transform: translateY(0); }
+.download-hint { margin-top: 12px; font-size: 13px; color: #6e7681; }
+
+.features { max-width: 800px; margin: 0 auto; padding: 40px 20px 60px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+.feature { background: #161b22; border: 1px solid #21262d; border-radius: 10px; padding: 24px; }
+.feature h3 { font-size: 16px; color: #fff; margin-bottom: 8px; }
+.feature p { font-size: 14px; color: #8b949e; }
+
+.shortcuts { max-width: 600px; margin: 0 auto; padding: 0 20px 60px; }
+.shortcuts h2 { font-size: 22px; color: #fff; text-align: center; margin-bottom: 20px; }
+.shortcut-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #21262d; font-size: 14px; }
+.shortcut-row:last-child { border: none; }
+kbd { background: #21262d; padding: 2px 8px; border-radius: 4px; font-size: 13px; font-family: inherit; }
+
+.faq { max-width: 600px; margin: 0 auto; padding: 0 20px 60px; }
+.faq h2 { font-size: 22px; color: #fff; text-align: center; margin-bottom: 20px; }
+.faq-item { margin-bottom: 16px; }
+.faq-item h3 { font-size: 15px; color: #c9d1d9; margin-bottom: 4px; }
+.faq-item p { font-size: 14px; color: #8b949e; }
+
+.footer { text-align: center; padding: 30px 20px; border-top: 1px solid #21262d; font-size: 13px; color: #484f58; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>鱼<span>隐</span></h1>
+  <p>办公场景下的隐蔽观赛与阅读桌面应用</p>
+  <a class="download-btn" href="https://github.com/FloraSun007/yu-yin/releases/latest">下载 Windows 版 v1.0.0</a>
+  <p class="download-hint">Windows 10/11 · 73MB · 免安装，双击即用</p>
+</div>
+
+<div class="features">
+  <div class="feature">
+    <h3>体育直播</h3>
+    <p>内置 CCTV5 / CCTV5+ / CCTV16，支持自定义视频链接和网页播放</p>
+  </div>
+  <div class="feature">
+    <h3>小说阅读</h3>
+    <p>内置起点中文网、七猫免费小说，窗口内直接浏览阅读</p>
+  </div>
+  <div class="feature">
+    <h3>一键伪装</h3>
+    <p>VS Code / Excel / 系统更新 / 邮件客户端，老板路过秒切</p>
+  </div>
+  <div class="feature">
+    <h3>老板键 F8</h3>
+    <p>瞬间隐藏窗口，再按恢复，无任何痕迹</p>
+  </div>
+</div>
+
+<div class="shortcuts">
+  <h2>快捷键</h2>
+  <div class="shortcut-row"><span><kbd>F8</kbd></span><span>老板键：瞬间隐藏/显示</span></div>
+  <div class="shortcut-row"><span><kbd>Ctrl</kbd> + <kbd>`</kbd></span><span>切换伪装/观赛模式</span></div>
+  <div class="shortcut-row"><span><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>↑</kbd></span><span>增加透明度</span></div>
+  <div class="shortcut-row"><span><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>↓</kbd></span><span>降低透明度</span></div>
+</div>
+
+<div class="faq">
+  <h2>常见问题</h2>
+  <div class="faq-item">
+    <h3>Windows 提示"未知发布者"？</h3>
+    <p>点击"更多信息" → "仍要运行"即可。这是因为应用没有购买代码签名证书，软件本身是安全的。</p>
+  </div>
+  <div class="faq-item">
+    <h3>需要安装吗？</h3>
+    <p>不需要。下载 exe 文件后双击即可运行，不写入注册表，删除文件即卸载。</p>
+  </div>
+  <div class="faq-item">
+    <h3>窗口找不到了？</h3>
+    <p>按 F8 键切换显示/隐藏，或点击右下角系统托盘的蓝色圆形图标。</p>
+  </div>
+  <div class="faq-item">
+    <h3>怎么完全退出？</h3>
+    <p>右键点击右下角系统托盘图标 → 退出。</p>
+  </div>
+</div>
+
+<div class="footer">
+  <p>鱼隐 YuYin · <a href="https://github.com/FloraSun007/yu-yin">GitHub</a></p>
+</div>
+
+</body>
+</html>

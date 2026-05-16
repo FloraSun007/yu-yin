@@ -1,6 +1,6 @@
 # 直播视频模块 PRD
 
-> 版本: 0.2.0
+> 版本: 1.0.0
 > 更新日期: 2026-05-14
 > 所属项目: 鱼隐 (YuYin)
 > 主文档: [PRD.md](PRD.md)
@@ -57,14 +57,36 @@
 
 ### 2.2 WebPagePlayer（网页播放）
 
-使用 Electron `<webview>` 标签嵌入网页，主要用于播放 CCTV 等网页直播源。
+使用 Electron `<webview>` 标签嵌入网页，主要用于播放 CCTV 等网页直播源以及加载任意网页 URL（如 B站视频）。
 
 **核心功能：**
 
 - 自动加载目标网页，全屏显示内容
 - 针对央视 (`tv.cctv.com`) 域名自动注入 CSS：隐藏页面导航/侧边栏/广告等非视频元素，将播放器区域固定为全屏
+- 自定义 UserAgent（Chrome/130.0.0.0），确保网页正常渲染
 - 加载失败时触发 `onFatalError` 回调
-- 自定义 UserAgent 模拟标准浏览器
+
+**导航拦截机制：**
+
+为防止网页内链接打开系统浏览器（如七猫小说点击章节跳转），WebPagePlayer 注入 JS 实现：
+
+1. **覆盖 `window.open`**：重定向为 `window.location.href`，阻止新窗口弹出
+2. **拦截 `target="_blank"` 点击**：在捕获阶段监听 click 事件，将 `_blank` 链接改为页内导航
+3. **MutationObserver 监听**：动态添加的 `target="_blank"` 链接自动改为 `_self`
+4. **页面导航后重新注入**：监听 `did-navigate` 和 `did-navigate-in-page` 事件，确保每次页面跳转后拦截脚本仍然生效
+5. **`setWindowOpenHandler`**：作为额外保险，通过 webview 的 `getWebContents()` 设置窗口打开拦截
+
+**GPU 加速配置：**
+
+主进程启动时通过 `app.commandLine.appendSwitch` 启用以下 GPU 加速参数：
+
+| 参数 | 说明 |
+|------|------|
+| `enable-gpu-rasterization` | GPU 光栅化 |
+| `enable-zero-copy` | 零拷贝 |
+| `ignore-gpu-blocklist` | 忽略 GPU 黑名单 |
+
+同时禁用 `web-security` 和 `site-isolation-trials` 以支持跨域视频流加载。
 
 ---
 
@@ -142,3 +164,14 @@
 1. **CCTV 源依赖网页结构**：WebPagePlayer 注入的 CSS 选择器依赖央视网页 DOM 结构，页面改版可能导致失效
 2. **WebPagePlayer 无本地控制**：网页播放模式下无法使用本地播放控制（进度条、音量等）
 3. **预设源可用性**：CCTV 直播源可能因地区限制或服务变更而失效
+4. **导航拦截非万能**：部分网站使用 JS 框架路由或特殊跳转方式，可能绕过拦截机制
+
+---
+
+## 8. 文档变更记录
+
+| 版本 | 日期 | 说明 |
+|------|------|------|
+| 0.1.0 | 2026-05-13 | 初始文档 |
+| 0.2.0 | 2026-05-14 | 模块化拆分 |
+| 1.0.0 | 2026-05-14 | 新增导航拦截机制、GPU 加速配置、UserAgent 自定义说明 |

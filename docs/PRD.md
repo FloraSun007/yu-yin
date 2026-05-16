@@ -1,8 +1,9 @@
 # 鱼隐 (YuYin) — 产品需求文档 (PRD)
 
-> 版本: 0.2.0
+> 版本: 1.0.0
 > 更新日期: 2026-05-14
 > 文档说明: 模块化 PRD 总览，各子系统详见子文档
+> 发布仓库: https://github.com/FloraSun007/yu-yin
 
 ---
 
@@ -23,8 +24,9 @@
 |------|------|
 | 隐蔽性 | 无任务栏图标、始终置顶小窗、可调透明度、老板键一键隐藏 |
 | 伪装性 | 多种高仿真办公软件主题，一键切换"工作模式" |
-| 易用性 | 内置直播源、支持自定义 URL、窗口可拖拽缩放 |
+| 易用性 | 内置直播源与小说源、支持自定义 URL、窗口可拖拽缩放 |
 | 兼容性 | 支持 HLS 直播流 (m3u8)、普通视频 (mp4/webm) 及网页播放 |
+| 轻量化 | 单文件 Portable exe，无需安装，双击即用 |
 
 ---
 
@@ -91,6 +93,25 @@
 
 打包格式：Windows Portable（单文件 .exe，x64），应用 ID：`com.yuyin.app`，输出目录：`release/`。
 
+### 5.1 发布流程
+
+1. 更新代码后执行 `npm run dist` 生成新版本 exe
+2. 提交代码到 GitHub：`git add -A` → `git commit` → `git push`
+3. 在 GitHub Releases 页面创建新 tag（如 `v1.0.0`），上传 exe 和使用说明
+
+### 5.2 国内打包环境
+
+项目已配置 `.npmrc`，使用 npmmirror 镜像加速 Electron 下载：
+```
+ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/
+```
+
+### 5.3 分发渠道
+
+- **GitHub Releases**（主渠道）：https://github.com/FloraSun007/yu-yin/releases
+- 用户下载 Portable exe 后双击运行，Windows 可能提示"未知发布者"（无代码签名证书）
+- 发布包附带 `使用说明.txt`
+
 ---
 
 ## 6. 文档变更记录
@@ -100,3 +121,4 @@
 | 0.1.0 | 2026-05-13 | 初始 PRD，单体文档 |
 | 0.2.0 | 2026-05-14 | 模块化拆分，新增小说模块占位文档 |
 | 0.3.0 | 2026-05-14 | 新增小说阅读模块（起点、七猫），模块 Tab 切换 |
+| 1.0.0 | 2026-05-14 | 首次正式发布：应用图标、README、使用说明、GitHub Releases 发布流程 |
