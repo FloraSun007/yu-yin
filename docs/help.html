@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>使用文档 - 鱼隐</title>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?45bcc3a3c541b024055b11add24eb3e1";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: -apple-system, 'Microsoft YaHei', 'Segoe UI', sans-serif; background: #0d1117; color: #c9d1d9; line-height: 1.7; }
+a { color: #58a6ff; text-decoration: none; }
+
+/* Layout */
+.layout { display: flex; min-height: 100vh; }
+
+/* Sidebar */
+.sidebar {
+  width: 260px; min-width: 260px; background: #161b22; border-right: 1px solid #21262d;
+  padding: 20px 0; position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto;
+  z-index: 100;
+}
+.sidebar-header { padding: 0 20px 16px; border-bottom: 1px solid #21262d; margin-bottom: 8px; }
+.sidebar-header a { font-size: 18px; font-weight: 700; color: #fff; }
+.sidebar-header a span { color: #4285f4; }
+.sidebar-header .sub { font-size: 12px; color: #484f58; margin-top: 2px; }
+
+.nav-group { margin-bottom: 4px; }
+.nav-group-title {
+  padding: 10px 20px 4px; font-size: 11px; font-weight: 600; color: #484f58;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.nav-item {
+  display: block; padding: 7px 20px 7px 28px; font-size: 14px; color: #8b949e;
+  cursor: pointer; transition: all 0.15s; border-left: 2px solid transparent;
+}
+.nav-item:hover { color: #c9d1d9; background: rgba(255,255,255,0.03); }
+.nav-item.active { color: #4285f4; background: rgba(66,133,244,0.06); border-left-color: #4285f4; font-weight: 500; }
+.nav-item.sub-item { padding-left: 44px; font-size: 13px; }
+
+/* Main content */
+.main { margin-left: 260px; flex: 1; min-width: 0; }
+
+/* Breadcrumb */
+.breadcrumb-bar {
+  position: sticky; top: 0; z-index: 50; background: rgba(13,17,23,0.92);
+  backdrop-filter: blur(8px); border-bottom: 1px solid #21262d;
+  padding: 12px 40px; font-size: 13px;
+}
+.breadcrumb { display: flex; align-items: center; gap: 6px; color: #484f58; flex-wrap: wrap; }
+.breadcrumb a { color: #6e7681; transition: color 0.15s; }
+.breadcrumb a:hover { color: #58a6ff; }
+.breadcrumb .sep { color: #30363d; margin: 0 2px; }
+.breadcrumb .current { color: #c9d1d9; font-weight: 500; }
+
+/* Content area */
+.content { max-width: 780px; margin: 0 auto; padding: 40px 40px 80px; }
+
+/* Sections - hidden by default, shown by JS */
+.doc-section { display: none; }
+.doc-section.visible { display: block; }
+
+.doc-section h1 { font-size: 32px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+.doc-section h2 { font-size: 22px; font-weight: 700; color: #fff; margin: 36px 0 12px; padding-top: 16px; border-top: 1px solid #21262d; }
+.doc-section h3 { font-size: 16px; font-weight: 600; color: #c9d1d9; margin: 20px 0 8px; }
+
+.doc-section p { font-size: 15px; color: #8b949e; margin-bottom: 14px; }
+.doc-section ul, .doc-section ol { padding-left: 20px; margin-bottom: 14px; }
+.doc-section li { font-size: 15px; color: #8b949e; margin-bottom: 6px; }
+
+.doc-section strong { color: #c9d1d9; font-weight: 600; }
+.doc-section code { background: #161b22; border: 1px solid #21262d; border-radius: 4px; padding: 2px 7px; font-size: 13px; color: #79c0ff; }
+.doc-section .kbd { display: inline-block; background: #21262d; border: 1px solid #30363d; border-radius: 4px; padding: 1px 8px; font-size: 13px; color: #c9d1d9; font-family: monospace; }
+
+/* Tip / Warning boxes */
+.tip-box {
+  background: rgba(66,133,244,0.06); border: 1px solid rgba(66,133,244,0.18);
+  border-radius: 8px; padding: 14px 18px; margin: 16px 0; font-size: 14px; color: #8b949e;
+}
+.tip-box strong { color: #4285f4; }
+.warn-box {
+  background: rgba(210,153,34,0.06); border: 1px solid rgba(210,153,34,0.18);
+  border-radius: 8px; padding: 14px 18px; margin: 16px 0; font-size: 14px; color: #8b949e;
+}
+.warn-box strong { color: #d29922; }
+
+/* Screenshot placeholder */
+.screenshot {
+  background: #161b22; border: 1px solid #21262d; border-radius: 10px;
+  padding: 32px; text-align: center; margin: 20px 0; color: #484f58; font-size: 14px;
+}
+
+/* Shortcut table */
+.shortcut-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+.shortcut-table th { text-align: left; font-size: 13px; color: #484f58; padding: 8px 12px; border-bottom: 1px solid #21262d; }
+.shortcut-table td { padding: 10px 12px; border-bottom: 1px solid #161b22; font-size: 14px; color: #8b949e; }
+.shortcut-table td:first-child { width: 180px; }
+
+/* FAQ */
+.faq-q { font-size: 15px; color: #c9d1d9; font-weight: 600; margin: 20px 0 6px; }
+.faq-a { font-size: 14px; color: #8b949e; margin-bottom: 16px; }
+
+/* Mobile */
+.menu-toggle { display: none; position: fixed; top: 12px; left: 12px; z-index: 200; background: #21262d; border: 1px solid #30363d; border-radius: 6px; padding: 6px 10px; color: #c9d1d9; font-size: 18px; cursor: pointer; }
+
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); transition: transform 0.2s; }
+  .sidebar.open { transform: translateX(0); }
+  .main { margin-left: 0; }
+  .menu-toggle { display: block; }
+  .breadcrumb-bar { padding: 12px 16px; padding-left: 48px; }
+  .content { padding: 24px 16px 60px; }
+}
+</style>
+</head>
+<body>
+
+<button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776;</button>
+
+<div class="layout">
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="index.html">鱼<span>隐</span></a>
+      <div class="sub">使用文档</div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">开始使用</div>
+      <a class="nav-item" data-section="welcome" data-breadcrumb="首页">欢迎</a>
+      <a class="nav-item" data-section="download" data-breadcrumb="开始使用" data-breadcrumb2="下载安装">下载与安装</a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">核心功能</div>
+      <a class="nav-item" data-section="live" data-breadcrumb="核心功能" data-breadcrumb2="体育直播">体育直播</a>
+      <a class="nav-item" data-section="video" data-breadcrumb="核心功能" data-breadcrumb2="视频播放">视频播放</a>
+      <a class="nav-item" data-section="novel" data-breadcrumb="核心功能" data-breadcrumb2="小说阅读">小说阅读</a>
+      <a class="nav-item" data-section="web" data-breadcrumb="核心功能" data-breadcrumb2="网页浏览">网页浏览</a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">隐蔽功能</div>
+      <a class="nav-item" data-section="disguise" data-breadcrumb="隐蔽功能" data-breadcrumb2="伪装主题">伪装主题</a>
+      <a class="nav-item" data-section="bosskey" data-breadcrumb="隐蔽功能" data-breadcrumb2="老板键与透明度">老板键与透明度</a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">参考</div>
+      <a class="nav-item" data-section="shortcuts" data-breadcrumb="参考" data-breadcrumb2="快捷键一览">快捷键一览</a>
+      <a class="nav-item" data-section="faq" data-breadcrumb="参考" data-breadcrumb2="常见问题">常见问题</a>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <div class="main">
+    <div class="breadcrumb-bar">
+      <div class="breadcrumb" id="breadcrumb">
+        <a href="index.html">首页</a>
+        <span class="sep">/</span>
+        <span class="current">欢迎</span>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- Welcome -->
+      <div class="doc-section visible" id="sec-welcome">
+        <h1>欢迎来到鱼隐</h1>
+        <p>鱼隐是一款 Windows 桌面应用，专为办公场景设计——让你在工作时也能看直播、读小说、刷网页。</p>
+        <p>无论世界杯、NBA、英超，还是起点追更、摸鱼刷视频，鱼隐都能帮你<strong>隐蔽、安全、无痕</strong>地完成。</p>
+
+        <h2>核心特点</h2>
+        <ul>
+          <li><strong>体育直播</strong> — 内置 CCTV5 / CCTV5+ / CCTV16，世界杯、奥运会、NBA 一键观看</li>
+          <li><strong>视频播放</strong> — 支持 m3u8 直播流、mp4/webm 视频文件，随意播放</li>
+          <li><strong>小说阅读</strong> — 内置起点中文网、七猫免费小说，小窗追更不留痕</li>
+          <li><strong>网页浏览</strong> — 输入任意网址，上网课、看股票、刷论坛</li>
+          <li><strong>伪装主题</strong> — 一键切换 VS Code / Excel / 系统更新 / 邮件界面</li>
+          <li><strong>老板键</strong> — 有人来了？一键隐藏，不留痕迹</li>
+          <li><strong>透明度调节</strong> — 半透明窗口，背后有人也不怕</li>
+          <li><strong>完全免费</strong> — 无广告、无收费、开源项目</li>
+        </ul>
+
+        <h2>免责声明</h2>
+        <div class="warn-box">
+          <strong>注意：</strong>鱼隐仅供学习交流使用。请合理安排工作与休息时间，因使用本软件导致的任何后果由用户自行承担。
+        </div>
+      </div>
+
+      <!-- Download -->
+      <div class="doc-section" id="sec-download">
+        <h1>下载与安装</h1>
+
+        <h2>系统要求</h2>
+        <ul>
+          <li>Windows 10 或 Windows 11（64 位）</li>
+          <li>无需安装任何依赖</li>
+        </ul>
+
+        <h2>下载</h2>
+        <p>前往 <a href="index.html">官网首页</a> 点击「免费下载」按钮，或直接访问 <a href="https://github.com/FloraSun007/yu-yin/releases" target="_blank">GitHub Releases</a> 下载最新版本。</p>
+
+        <h2>安装（不需要安装）</h2>
+        <p>鱼隐是 <strong>Portable（便携）</strong> 应用，下载 exe 文件后：</p>
+        <ol>
+          <li><strong>双击运行</strong> — 不需要安装，直接启动</li>
+          <li>Windows 可能提示"Windows 已保护你的电脑"，点击 <strong>「更多信息」</strong> → <strong>「仍要运行」</strong></li>
+          <li>启动后，桌面会出现一个无框透明小窗</li>
+        </ol>
+
+        <div class="tip-box">
+          <strong>提示：</strong>鱼隐不会写入注册表，不会创建快捷方式。想卸载？直接删除 exe 文件即可。
+        </div>
+
+        <h2>首次启动</h2>
+        <p>启动后你会看到鱼隐的主界面：</p>
+        <div class="screenshot">主界面截图 — 内置直播源列表</div>
+        <ul>
+          <li>左侧是<strong>直播源列表</strong>（CCTV5、CCTV5+、CCTV16）</li>
+          <li>点击任意直播源即可开始观看</li>
+          <li>也可以输入自定义 URL 播放其他直播流</li>
+        </ul>
+      </div>
+
+      <!-- Live Broadcast -->
+      <div class="doc-section" id="sec-live">
+        <h1>体育直播</h1>
+        <p>这是鱼隐<strong>最主要的功能</strong>。内置 CCTV5 / CCTV5+ / CCTV16 三大体育频道，世界杯、奥运会、NBA、英超、中超……想看什么看什么。</p>
+
+        <h2>内置直播源</h2>
+        <p>启动后在首页即可看到内置直播源：</p>
+        <div class="screenshot">直播源列表示意图</div>
+
+        <table class="shortcut-table">
+          <thead><tr><th>频道</th><th>内容</th></tr></thead>
+          <tbody>
+            <tr><td><strong>CCTV5</strong></td><td>体育频道 — 足球、篮球、排球、乒乓球等综合体育赛事</td></tr>
+            <tr><td><strong>CCTV5+</strong></td><td>体育赛事频道 — 更多样赛事直播，冰球、赛车、马拉松等</td></tr>
+            <tr><td><strong>CCTV16</strong></td><td>奥林匹克频道 — 奥运相关赛事、纪录片</td></tr>
+          </tbody>
+        </table>
+
+        <h2>观看直播</h2>
+        <ol>
+          <li>点击直播源列表中的任意频道</li>
+          <li>视频加载后即可开始观看</li>
+          <li>窗口可拖拽移动，可调整大小</li>
+          <li>按 <span class="kbd">F8</span> 一键隐藏窗口</li>
+        </ol>
+
+        <div class="tip-box">
+          <strong>世界杯 / 奥运会期间：</strong>CCTV5 和 CCTV5+ 会全天候直播赛事，打开鱼隐就不会错过任何一场比赛。
+        </div>
+
+        <h2>自定义直播源</h2>
+        <p>除了内置频道，你还可以输入任何 HLS 直播流地址（m3u8 格式）：</p>
+        <ol>
+          <li>在首页点击「自定义」或输入框</li>
+          <li>粘贴 m3u8 直播流地址</li>
+          <li>点击播放即可</li>
+        </ol>
+
+        <div class="tip-box">
+          <strong>支持的格式：</strong>HLS 直播流（.m3u8）、普通视频（.mp4 / .webm）、网页视频（任意 URL）。
+        </div>
+      </div>
+
+      <!-- Video -->
+      <div class="doc-section" id="sec-video">
+        <h1>视频播放</h1>
+        <p>除了直播流，鱼隐也支持播放普通视频文件和网络视频。</p>
+
+        <h2>播放网络视频</h2>
+        <ol>
+          <li>在首页输入框中粘贴视频 URL</li>
+          <li>支持 m3u8、mp4、webm 等格式</li>
+          <li>点击播放即可</li>
+        </ol>
+
+        <h2>播放控制</h2>
+        <p>播放器支持基本的播放控制：播放/暂停、音量调节、进度拖拽（非直播流）、全屏切换。</p>
+
+        <h2>窗口调整</h2>
+        <ul>
+          <li><strong>拖拽移动</strong> — 按住窗口空白区域拖动</li>
+          <li><strong>缩放窗口</strong> — 拖动窗口边缘调整大小</li>
+          <li><strong>透明度</strong> — 按 <span class="kbd">Ctrl+Shift+↑</span> / <span class="kbd">Ctrl+Shift+↓</span> 调节</li>
+        </ul>
+      </div>
+
+      <!-- Novel -->
+      <div class="doc-section" id="sec-novel">
+        <h1>小说阅读</h1>
+        <p>鱼隐内置了起点中文网和七猫免费小说，让你在办公桌前也能追更。</p>
+
+        <h2>使用方法</h2>
+        <ol>
+          <li>切换到「小说」标签页</li>
+          <li>选择「起点中文网」或「七猫免费小说」</li>
+          <li>网页加载后即可在线阅读</li>
+        </ol>
+
+        <table class="shortcut-table">
+          <thead><tr><th>平台</th><th>说明</th></tr></thead>
+          <tbody>
+            <tr><td><strong>起点中文网</strong></td><td>国内最大的网络文学平台，海量小说连载</td></tr>
+            <tr><td><strong>七猫免费小说</strong></td><td>免费小说平台，无需付费即可阅读</td></tr>
+          </tbody>
+        </table>
+
+        <div class="tip-box">
+          <strong>小窗阅读：</strong>鱼隐的窗口可以缩到很小，放在屏幕角落，配合透明度调节，摸鱼追更两不误。
+        </div>
+
+        <h2>自定义网址</h2>
+        <p>你也可以输入其他小说网站的 URL，鱼隐会以网页形式打开，支持在线阅读。</p>
+      </div>
+
+      <!-- Web -->
+      <div class="doc-section" id="sec-web">
+        <h1>网页浏览</h1>
+        <p>鱼隐支持打开任意网址，相当于一个隐蔽的迷你浏览器。上网课、看股票、刷论坛，随你用。</p>
+
+        <h2>使用方法</h2>
+        <ol>
+          <li>在首页输入框中输入网址</li>
+          <li>点击访问即可</li>
+          <li>网页会在鱼隐窗口内显示</li>
+        </ol>
+
+        <h2>常见用途</h2>
+        <ul>
+          <li><strong>看股票</strong> — 打开东方财富、雪球等网站，实时关注行情</li>
+          <li><strong>上网课</strong> — 在工作间隙学习，提升自己</li>
+          <li><strong>刷论坛</strong> — 虎扑、知乎、B站，一个都不少</li>
+          <li><strong>看新闻</strong> — 随时了解最新资讯</li>
+        </ul>
+
+        <div class="tip-box">
+          <strong>配合伪装主题：</strong>看股票时可以伪装成 Excel，上网课时可以伪装成 VS Code。别人远远看去，你正在"认真工作"。
+        </div>
+      </div>
+
+      <!-- Disguise -->
+      <div class="doc-section" id="sec-disguise">
+        <h1>伪装主题</h1>
+        <p>鱼隐提供多种高仿真办公软件界面，一键切换"工作模式"。老板路过时，你的屏幕看起来就像在认真工作。</p>
+
+        <h2>可用主题</h2>
+        <table class="shortcut-table">
+          <thead><tr><th>主题</th><th>说明</th></tr></thead>
+          <tbody>
+            <tr><td><strong>VS Code</strong></td><td>仿真 VS Code 编辑器界面，看起来在写代码</td></tr>
+            <tr><td><strong>Excel</strong></td><td>仿真 Excel 表格界面，看起来在做报表</td></tr>
+            <tr><td><strong>系统更新</strong></td><td>仿真 Windows 更新界面，看起来电脑正在更新</td></tr>
+            <tr><td><strong>邮件</strong></td><td>仿真邮件客户端界面，看起来在收发邮件</td></tr>
+          </tbody>
+        </table>
+
+        <h2>切换主题</h2>
+        <ol>
+          <li>按 <span class="kbd">Ctrl + `</span>（反引号键）在伪装主题和当前内容之间切换</li>
+          <li>再次按下 <span class="kbd">Ctrl + `</span> 返回之前的内容</li>
+        </ol>
+
+        <div class="tip-box">
+          <strong>快捷切换：</strong>熟练使用 <span class="kbd">Ctrl + `</span> 切换，可以在 0.1 秒内从看直播切换到"写代码"。
+        </div>
+      </div>
+
+      <!-- Boss Key -->
+      <div class="doc-section" id="sec-bosskey">
+        <h1>老板键与透明度</h1>
+        <p>鱼隐的核心隐蔽功能，让你在任何情况下都不暴露。</p>
+
+        <h2>老板键（F8）</h2>
+        <p>按 <span class="kbd">F8</span> 键，窗口会<strong>瞬间隐藏</strong>——不是最小化，是完全消失。任务栏看不到，Alt+Tab 也看不到。</p>
+        <ol>
+          <li>按 <span class="kbd">F8</span> 隐藏窗口</li>
+          <li>再按 <span class="kbd">F8</span> 恢复窗口</li>
+          <li>也可以点击系统托盘（右下角）的蓝色圆形图标来切换</li>
+        </ol>
+
+        <h2>透明度调节</h2>
+        <p>通过快捷键调节窗口透明度，即使有人站在背后也看不清你在看什么。</p>
+        <table class="shortcut-table">
+          <thead><tr><th>快捷键</th><th>功能</th></tr></thead>
+          <tbody>
+            <tr><td><span class="kbd">Ctrl + Shift + ↑</span></td><td>增加透明度（更清晰）</td></tr>
+            <tr><td><span class="kbd">Ctrl + Shift + ↓</span></td><td>降低透明度（更透明）</td></tr>
+          </tbody>
+        </table>
+
+        <div class="tip-box">
+          <strong>组合使用：</strong>半透明 + 小窗口 + 屏幕角落 = 完美摸鱼姿势。别人看你的屏幕，只会觉得有个不太清晰的窗口在跑什么东西。
+        </div>
+
+        <h2>窗口找不到了？</h2>
+        <div class="warn-box">
+          <strong>解决方法：</strong>按 <span class="kbd">F8</span> 键切换显示/隐藏，或点击右下角系统托盘的蓝色圆形图标。
+        </div>
+      </div>
+
+      <!-- Shortcuts -->
+      <div class="doc-section" id="sec-shortcuts">
+        <h1>快捷键一览</h1>
+        <p>所有快捷键都可以在应用运行时全局使用，无论窗口是否获得焦点。</p>
+
+        <table class="shortcut-table">
+          <thead><tr><th>快捷键</th><th>功能</th><th>说明</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="kbd">F8</span></td>
+              <td>老板键</td>
+              <td>瞬间隐藏/显示窗口</td>
+            </tr>
+            <tr>
+              <td><span class="kbd">Ctrl + `</span></td>
+              <td>模式切换</td>
+              <td>在伪装主题和当前内容之间切换</td>
+            </tr>
+            <tr>
+              <td><span class="kbd">Ctrl + Shift + ↑</span></td>
+              <td>增加透明度</td>
+              <td>每次 +0.05，上限 1.0</td>
+            </tr>
+            <tr>
+              <td><span class="kbd">Ctrl + Shift + ↓</span></td>
+              <td>降低透明度</td>
+              <td>每次 -0.05，下限 0.05</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>托盘操作</h2>
+        <table class="shortcut-table">
+          <thead><tr><th>操作</th><th>说明</th></tr></thead>
+          <tbody>
+            <tr><td>左键点击托盘图标</td><td>显示/隐藏窗口</td></tr>
+            <tr><td>右键点击托盘图标</td><td>打开菜单：显示/隐藏、退出</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- FAQ -->
+      <div class="doc-section" id="sec-faq">
+        <h1>常见问题</h1>
+
+        <div class="faq-q">真的免费吗？</div>
+        <div class="faq-a">完全免费，无隐藏收费，无广告，开源项目。源码在 <a href="https://github.com/FloraSun007/yu-yin" target="_blank">GitHub</a> 上公开。</div>
+
+        <div class="faq-q">会被 IT 部门发现吗？</div>
+        <div class="faq-a">鱼隐不在任务栏显示图标，窗口可调节透明度，还有老板键一键隐藏。只要你自己不暴露，别人很难发现。</div>
+
+        <div class="faq-q">需要安装吗？</div>
+        <div class="faq-a">不需要。下载 exe 文件后双击即可运行，不写注册表，不创建快捷方式，删除文件即卸载。</div>
+
+        <div class="faq-q">Windows 提示"未知发布者"怎么办？</div>
+        <div class="faq-a">这是因为软件没有购买代码签名证书。点击「更多信息」→「仍要运行」即可。软件本身是安全的，源码公开可查。</div>
+
+        <div class="faq-q">窗口找不到了怎么办？</div>
+        <div class="faq-a">按 <span class="kbd">F8</span> 键切换显示/隐藏，或点击右下角系统托盘的蓝色圆形图标。</div>
+
+        <div class="faq-q">怎么完全退出？</div>
+        <div class="faq-a">右键点击右下角系统托盘图标 → 退出。</div>
+
+        <div class="faq-q">直播源看不了怎么办？</div>
+        <div class="faq-a">直播源依赖 CCTV 官方服务器，偶尔可能因为网络波动导致加载失败。请稍后重试，或检查网络连接。</div>
+
+        <div class="faq-q">支持 Mac 吗？</div>
+        <div class="faq-a">目前仅支持 Windows 10/11。Mac 版本暂无计划。</div>
+
+        <div class="faq-q">数据安全吗？</div>
+        <div class="faq-a">鱼隐不收集任何用户数据，不联网上传任何信息。应用本身使用 Electron 安全沙箱架构，渲染进程无 Node.js 访问权限。</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var navItems = document.querySelectorAll('.nav-item');
+  var sections = document.querySelectorAll('.doc-section');
+  var breadcrumbEl = document.getElementById('breadcrumb');
+  var sidebar = document.getElementById('sidebar');
+
+  function showSection(id, navItem) {
+    sections.forEach(function(s) { s.classList.remove('visible'); });
+    var target = document.getElementById('sec-' + id);
+    if (target) target.classList.add('visible');
+
+    navItems.forEach(function(n) { n.classList.remove('active'); });
+    if (navItem) navItem.classList.add('active');
+
+    // Build breadcrumb: 首页 / 使用文档 / [一级] / [二级]
+    var bc1 = navItem ? navItem.getAttribute('data-breadcrumb') : '';
+    var bc2 = navItem ? navItem.getAttribute('data-breadcrumb2') : '';
+    var title = navItem ? navItem.textContent.trim() : '';
+
+    var html = '<a href="index.html">首页</a><span class="sep">/</span><a href="help.html">使用文档</a>';
+
+    if (bc1) {
+      html += '<span class="sep">/</span>';
+      if (bc2) {
+        html += '<span class="current">' + bc1 + '</span>';
+      } else {
+        html += '<span class="current">' + bc1 + '</span>';
+      }
+    }
+    if (bc2) {
+      html += '<span class="sep">/</span><span class="current">' + bc2 + '</span>';
+    }
+    if (!bc1 && !bc2) {
+      html += '<span class="sep">/</span><span class="current">' + title + '</span>';
+    }
+
+    breadcrumbEl.innerHTML = html;
+
+    // Close mobile sidebar
+    sidebar.classList.remove('open');
+
+    // Update URL hash
+    if (history.replaceState) {
+      history.replaceState(null, null, '#' + id);
+    }
+
+    // Scroll to top
+    window.scrollTo(0, 0);
+  }
+
+  navItems.forEach(function(item) {
+    item.addEventListener('click', function(e) {
+      e.preventDefault();
+      var id = this.getAttribute('data-section');
+      showSection(id, this);
+    });
+  });
+
+  // Handle initial hash
+  function initFromHash() {
+    var hash = window.location.hash.replace('#', '');
+    if (hash) {
+      navItems.forEach(function(item) {
+        if (item.getAttribute('data-section') === hash) {
+          showSection(hash, item);
+        }
+      });
+    }
+  }
+
+  initFromHash();
+  window.addEventListener('hashchange', initFromHash);
+})();
+</script>
+</body>
+</html>

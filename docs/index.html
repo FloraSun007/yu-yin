@@ -19,8 +19,25 @@ html { scroll-behavior: smooth; }
 body { font-family: -apple-system, 'Microsoft YaHei', 'Segoe UI', sans-serif; background: #0d1117; color: #c9d1d9; line-height: 1.7; }
 a { color: #58a6ff; text-decoration: none; }
 
+/* Navbar */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 32px; height: 56px;
+  background: rgba(13,17,23,0.82); backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(33,38,45,0.6);
+}
+.navbar .logo { font-size: 20px; font-weight: 800; color: #fff; }
+.navbar .logo span { color: #4285f4; }
+.navbar .nav-links { display: flex; gap: 8px; }
+.navbar .nav-links a {
+  padding: 6px 16px; font-size: 14px; color: #8b949e; border-radius: 6px;
+  transition: all 0.15s;
+}
+.navbar .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.06); }
+
 /* Hero */
-.hero { text-align: center; padding: 80px 20px 60px; background: radial-gradient(ellipse at 50% 0%, #161b22 0%, #0d1117 70%); }
+.hero { text-align: center; padding: 120px 20px 60px; background: radial-gradient(ellipse at 50% 0%, #161b22 0%, #0d1117 70%); }
 .hero h1 { font-size: 52px; font-weight: 800; color: #fff; margin-bottom: 8px; }
 .hero h1 span { color: #4285f4; }
 .hero .tagline { font-size: 18px; color: #8b949e; margin-bottom: 32px; }
@@ -97,7 +114,38 @@ a { color: #58a6ff; text-decoration: none; }
 /* Footer */
 .footer { text-align: center; padding: 36px 20px; border-top: 1px solid #21262d; font-size: 13px; color: #484f58; }
 
+/* Pricing */
+.pricing-card {
+  max-width: 420px; margin: 0 auto; background: #161b22; border: 1px solid #21262d;
+  border-radius: 16px; padding: 40px 32px; text-align: center;
+}
+.pricing-card .price { font-size: 48px; font-weight: 800; color: #3fb950; margin: 12px 0 4px; }
+.pricing-card .price-note { font-size: 14px; color: #484f58; margin-bottom: 24px; }
+.pricing-card .price-features { text-align: left; margin-bottom: 28px; }
+.pricing-card .price-features li { font-size: 14px; color: #8b949e; margin-bottom: 8px; list-style: none; padding-left: 24px; position: relative; }
+.pricing-card .price-features li::before { content: "✓"; position: absolute; left: 0; color: #3fb950; font-weight: 700; }
+.pricing-btn {
+  display: inline-block; padding: 12px 40px; font-size: 16px; font-weight: 700;
+  background: #3fb950; color: #fff; border-radius: 10px; border: none; cursor: pointer;
+  transition: all 0.2s; box-shadow: 0 4px 20px rgba(63,185,80,0.25);
+}
+.pricing-btn:hover { background: #2ea043; transform: translateY(-1px); box-shadow: 0 6px 28px rgba(63,185,80,0.35); }
+
+/* Contact */
+.contact-list { max-width: 600px; margin: 0 auto; }
+.contact-item {
+  display: flex; align-items: center; gap: 16px;
+  background: #161b22; border: 1px solid #21262d; border-radius: 12px;
+  padding: 20px 24px; margin-bottom: 12px; transition: border-color 0.2s;
+}
+.contact-item:hover { border-color: #4285f4; }
+.contact-icon { font-size: 24px; flex-shrink: 0; }
+.contact-item h3 { font-size: 15px; color: #fff; margin-bottom: 2px; }
+.contact-item p { font-size: 13px; color: #6e7681; }
+
 @media (max-width: 600px) {
+  .navbar { padding: 0 16px; }
+  .navbar .nav-links a { padding: 6px 10px; font-size: 13px; }
   .hero h1 { font-size: 36px; }
   .features { grid-template-columns: repeat(2, 1fr); }
   .scenarios { grid-template-columns: 1fr; }
@@ -105,6 +153,16 @@ a { color: #58a6ff; text-decoration: none; }
 </style>
 </head>
 <body>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <a href="#" class="logo">鱼<span>隐</span></a>
+  <div class="nav-links">
+    <a href="help.html">使用文档</a>
+    <a href="#pricing">价格套餐</a>
+    <a href="#contact">联系我们</a>
+  </div>
+</nav>
 
 <div class="hero">
   <h1>鱼<span>隐</span></h1>
@@ -277,8 +335,61 @@ a { color: #58a6ff; text-decoration: none; }
   </div>
 </div>
 
+<!-- Pricing -->
+<div class="section" id="pricing">
+  <h2 class="section-title">价格套餐</h2>
+  <p class="section-sub">就一个方案：全免费</p>
+  <div class="pricing-card">
+    <h3 style="font-size:18px;color:#fff;font-weight:600;">鱼隐完整版</h3>
+    <div class="price">¥0</div>
+    <div class="price-note">永久免费，无隐藏收费</div>
+    <ul class="price-features">
+      <li>内置 CCTV5 / CCTV5+ / CCTV16 直播</li>
+      <li>支持自定义 m3u8 / mp4 / webm 播放</li>
+      <li>内置起点中文网、七猫免费小说</li>
+      <li>自由浏览任意网页</li>
+      <li>VS Code / Excel / 系统更新 / 邮件伪装</li>
+      <li>老板键一键隐藏</li>
+      <li>窗口透明度调节</li>
+      <li>隐身运行，无任务栏图标</li>
+      <li>免安装，双击即用</li>
+      <li>无广告，无功能限制</li>
+    </ul>
+    <a class="pricing-btn" href="https://github.com/FloraSun007/yu-yin/releases/download/v1.0.0/yuyin1.0.0.exe" download onclick="_hmt.push(['_trackEvent', 'download', 'click', 'yuyin1.0.0-pricing'])">立即下载</a>
+  </div>
+</div>
+
+<!-- Contact -->
+<div class="section" id="contact">
+  <h2 class="section-title">联系我们</h2>
+  <p class="section-sub">有问题？随时找我们</p>
+  <div class="contact-list">
+    <a class="contact-item" href="https://github.com/FloraSun007/yu-yin/issues" target="_blank">
+      <div class="contact-icon">🐛</div>
+      <div>
+        <h3>GitHub Issues</h3>
+        <p>提交 Bug 反馈或功能建议</p>
+      </div>
+    </a>
+    <a class="contact-item" href="https://github.com/FloraSun007/yu-yin" target="_blank">
+      <div class="contact-icon">💻</div>
+      <div>
+        <h3>GitHub 仓库</h3>
+        <p>查看源码、参与贡献、Star 支持</p>
+      </div>
+    </a>
+    <a class="contact-item" href="help.html">
+      <div class="contact-icon">📖</div>
+      <div>
+        <h3>使用文档</h3>
+        <p>查看详细的使用说明和常见问题</p>
+      </div>
+    </a>
+  </div>
+</div>
+
 <div class="footer">
-  <p>鱼隐 YuYin · <a href="https://github.com/FloraSun007/yu-yin">GitHub</a></p>
+  <p>鱼隐 YuYin · <a href="help.html">使用文档</a> · <a href="https://github.com/FloraSun007/yu-yin">GitHub</a></p>
 </div>
 
 </body>
