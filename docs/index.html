@@ -3,112 +3,359 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>鱼隐 - 隐蔽观赛与阅读</title>
-<style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: -apple-system, 'Microsoft YaHei', 'Segoe UI', sans-serif; background: #0d1117; color: #e0e0e0; line-height: 1.7; }
-a { color: #58a6ff; text-decoration: none; }
-
-.hero { text-align: center; padding: 80px 20px 60px; }
-.hero h1 { font-size: 48px; font-weight: 700; color: #fff; margin-bottom: 12px; }
-.hero h1 span { color: #4285f4; }
-.hero p { font-size: 18px; color: #8b949e; max-width: 500px; margin: 0 auto 32px; }
-
-.download-btn {
-  display: inline-block; padding: 14px 40px; font-size: 18px; font-weight: 600;
-  background: #4285f4; color: #fff; border-radius: 8px; border: none; cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
-}
-.download-btn:hover { background: #3b78e7; transform: translateY(-1px); }
-.download-btn:active { transform: translateY(0); }
-.download-hint { margin-top: 12px; font-size: 13px; color: #6e7681; }
-
-.features { max-width: 800px; margin: 0 auto; padding: 40px 20px 60px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
-.feature { background: #161b22; border: 1px solid #21262d; border-radius: 10px; padding: 24px; }
-.feature h3 { font-size: 16px; color: #fff; margin-bottom: 8px; }
-.feature p { font-size: 14px; color: #8b949e; }
-
-.shortcuts { max-width: 600px; margin: 0 auto; padding: 0 20px 60px; }
-.shortcuts h2 { font-size: 22px; color: #fff; text-align: center; margin-bottom: 20px; }
-.shortcut-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #21262d; font-size: 14px; }
-.shortcut-row:last-child { border: none; }
-kbd { background: #21262d; padding: 2px 8px; border-radius: 4px; font-size: 13px; font-family: inherit; }
-
-.faq { max-width: 600px; margin: 0 auto; padding: 0 20px 60px; }
-.faq h2 { font-size: 22px; color: #fff; text-align: center; margin-bottom: 20px; }
-.faq-item { margin-bottom: 16px; }
-.faq-item h3 { font-size: 15px; color: #c9d1d9; margin-bottom: 4px; }
-.faq-item p { font-size: 14px; color: #8b949e; }
-
-.footer { text-align: center; padding: 30px 20px; border-top: 1px solid #21262d; font-size: 13px; color: #484f58; }
-</style>
+<title>鱼隐 - 上班摸鱼，理直气壮</title>
 <script>
 var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
   hm.src = "https://hm.baidu.com/hm.js?45bcc3a3c541b024055b11add24eb3e1";
-  var s = document.getElementsByTagName("script")[0]; 
+  var s = document.getElementsByTagName("script")[0];
   s.parentNode.insertBefore(hm, s);
 })();
 </script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: -apple-system, 'Microsoft YaHei', 'Segoe UI', sans-serif; background: #0a0e17; color: #e0e0e0; line-height: 1.8; overflow-x: hidden; }
+a { color: #58a6ff; text-decoration: none; }
+
+/* Hero */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 20px;
+  background: radial-gradient(ellipse at 50% 0%, #1a2332 0%, #0a0e17 70%);
+}
+.hero h1 {
+  font-size: 56px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #fff 0%, #4285f4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 16px;
+}
+.hero .subtitle {
+  font-size: 20px;
+  color: #8b949e;
+  max-width: 520px;
+  margin: 0 auto 12px;
+}
+.hero .highlight {
+  font-size: 15px;
+  color: #4285f4;
+  margin-bottom: 36px;
+}
+
+/* Download */
+.download-btn {
+  display: inline-block;
+  padding: 16px 48px;
+  font-size: 18px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #4285f4, #2563eb);
+  color: #fff;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 24px rgba(66, 133, 244, 0.3);
+}
+.download-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(66, 133, 244, 0.4);
+}
+.download-hint {
+  margin-top: 16px;
+  font-size: 13px;
+  color: #484f58;
+}
+
+/* Badges */
+.badges {
+  display: flex;
+  gap: 12px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.badge {
+  background: rgba(66, 133, 244, 0.1);
+  border: 1px solid rgba(66, 133, 244, 0.2);
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 13px;
+  color: #7eb8ff;
+}
+
+/* Section common */
+.section {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 80px 20px;
+}
+.section-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 8px;
+}
+.section-desc {
+  font-size: 16px;
+  color: #6e7681;
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+/* Scenario cards */
+.scenarios {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 20px;
+}
+.scenario {
+  background: linear-gradient(135deg, #141a26 0%, #0f1420 100%);
+  border: 1px solid #1e2736;
+  border-radius: 16px;
+  padding: 32px;
+  transition: all 0.3s;
+}
+.scenario:hover {
+  border-color: #4285f4;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+.scenario .icon {
+  font-size: 36px;
+  margin-bottom: 16px;
+}
+.scenario h3 {
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.scenario .quote {
+  font-size: 14px;
+  color: #4285f4;
+  margin-bottom: 12px;
+  font-style: italic;
+}
+.scenario p {
+  font-size: 14px;
+  color: #8b949e;
+}
+
+/* Features grid */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+.feature-card {
+  background: #141a26;
+  border: 1px solid #1e2736;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  transition: all 0.3s;
+}
+.feature-card:hover {
+  border-color: #2d3a4d;
+}
+.feature-card .feat-icon {
+  font-size: 28px;
+  margin-bottom: 12px;
+}
+.feature-card h4 {
+  font-size: 15px;
+  color: #fff;
+  margin-bottom: 6px;
+}
+.feature-card p {
+  font-size: 13px;
+  color: #6e7681;
+}
+
+/* Shortcuts */
+.shortcuts-table { max-width: 600px; margin: 0 auto; }
+.shortcut-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #1e2736;
+  font-size: 14px;
+}
+.shortcut-row:last-child { border: none; }
+kbd {
+  background: #1e2736;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: inherit;
+  border: 1px solid #2d3a4d;
+}
+
+/* FAQ */
+.faq-list { max-width: 700px; margin: 0 auto; }
+.faq-item {
+  background: #141a26;
+  border: 1px solid #1e2736;
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 12px;
+}
+.faq-item h3 { font-size: 15px; color: #c9d1d9; margin-bottom: 6px; }
+.faq-item p { font-size: 14px; color: #8b949e; }
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 40px 20px;
+  border-top: 1px solid #1e2736;
+  font-size: 13px;
+  color: #484f58;
+}
+
+@media (max-width: 480px) {
+  .hero h1 { font-size: 36px; }
+  .scenarios { grid-template-columns: 1fr; }
+  .section-title { font-size: 24px; }
+}
+</style>
 </head>
 <body>
 
 <div class="hero">
-  <h1>鱼<span>隐</span></h1>
-  <p>办公场景下的隐蔽观赛与阅读桌面应用</p>
-  <a class="download-btn" href="https://github.com/FloraSun007/yu-yin/releases/download/v1.0.0/yuyin1.0.0.exe" download onclick="_hmt.push(['_trackEvent', 'download', 'click', 'yuyin1.0.0'])">下载 Windows 版 v1.0.0</a>
-  <p class="download-hint">Windows 10/11 · 73MB · 免安装，双击即用</p>
-</div>
-
-<div class="features">
-  <div class="feature">
-    <h3>体育直播</h3>
-    <p>内置 CCTV5 / CCTV5+ / CCTV16 体育频道，一键观看赛事直播</p>
-  </div>
-  <div class="feature">
-    <h3>自定义网页浏览</h3>
-    <p>输入任意网址即可浏览，上网课、看视频、看股票、查资料，自由使用</p>
-  </div>
-  <div class="feature">
-    <h3>小说阅读</h3>
-    <p>内置起点中文网、七猫免费小说，窗口内直接浏览阅读</p>
-  </div>
-  <div class="feature">
-    <h3>一键伪装</h3>
-    <p>VS Code / Excel / 系统更新 / 邮件客户端，老板路过秒切</p>
-  </div>
-  <div class="feature">
-    <h3>老板键 F8</h3>
-    <p>瞬间隐藏窗口，再按恢复，无任何痕迹</p>
+  <h1>上班摸鱼，理直气壮</h1>
+  <p class="subtitle">看起来在认真工作，其实在看球赛、追小说、刷网页</p>
+  <p class="highlight">鱼隐 — 专为办公场景设计的隐蔽桌面应用</p>
+  <a class="download-btn" href="https://github.com/FloraSun007/yu-yin/releases/download/v1.0.0/yuyin1.0.0.exe" download onclick="_hmt.push(['_trackEvent', 'download', 'click', 'yuyin1.0.0'])">立即下载 Windows 版</a>
+  <p class="download-hint">Windows 10/11 · 73MB · 免安装，双击即用 · 完全免费</p>
+  <div class="badges">
+    <span class="badge">完全免费</span>
+    <span class="badge">免安装</span>
+    <span class="badge">无广告</span>
+    <span class="badge">开源</span>
   </div>
 </div>
 
-<div class="shortcuts">
-  <h2>快捷键</h2>
-  <div class="shortcut-row"><span><kbd>F8</kbd></span><span>老板键：瞬间隐藏/显示</span></div>
-  <div class="shortcut-row"><span><kbd>Ctrl</kbd> + <kbd>`</kbd></span><span>切换伪装/观赛模式</span></div>
-  <div class="shortcut-row"><span><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>↑</kbd></span><span>增加透明度</span></div>
-  <div class="shortcut-row"><span><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>↓</kbd></span><span>降低透明度</span></div>
+<!-- Scenarios -->
+<div class="section">
+  <h2 class="section-title">摸鱼就该是这个样子</h2>
+  <p class="section-desc">每一种场景，都伪装得天衣无缝</p>
+  <div class="scenarios">
+    <div class="scenario">
+      <div class="icon">⚽</div>
+      <h3>看球赛直播</h3>
+      <p class="quote">"屏幕上分明是 VS Code，其实 CCTV5 正在直播"</p>
+      <p>内置 CCTV5、CCTV5+、CCTV16 体育频道，一键观看。也支持添加自定义直播源链接。</p>
+    </div>
+    <div class="scenario">
+      <div class="icon">📖</div>
+      <h3>追小说</h3>
+      <p class="quote">"Excel 里藏着起点中文网，摸鱼也能追更"</p>
+      <p>内置起点中文网、七猫免费小说，小窗直接阅读。看累了切个伪装，老板根本发现不了。</p>
+    </div>
+    <div class="scenario">
+      <div class="icon">🌐</div>
+      <h3>自由浏览网页</h3>
+      <p class="quote">"同事以为我在查资料，其实我在上网课、看股票"</p>
+      <p>输入任意网址即可浏览。上网课、刷视频、看股票、查资讯…一个窗口搞定一切。</p>
+    </div>
+    <div class="scenario">
+      <div class="icon">🏃</div>
+      <h3>老板来了？一秒切换</h3>
+      <p class="quote">"F8 一按，瞬间消失。再按，又回来了"</p>
+      <p>按 F8 瞬间隐藏窗口，无任何痕迹。或者用 Ctrl+` 切换伪装界面，假装在写代码、做表格。</p>
+    </div>
+  </div>
 </div>
 
-<div class="faq">
-  <h2>常见问题</h2>
-  <div class="faq-item">
-    <h3>Windows 提示"未知发布者"？</h3>
-    <p>点击"更多信息" → "仍要运行"即可。这是因为应用没有购买代码签名证书，软件本身是安全的。</p>
+<!-- Features -->
+<div class="section">
+  <h2 class="section-title">功能一览</h2>
+  <p class="section-desc">简单好用，开箱即用</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feat-icon">🔑</div>
+      <h4>老板键 F8</h4>
+      <p>一键隐藏/显示，瞬间切换</p>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon">🎭</div>
+      <h4>4 种伪装主题</h4>
+      <p>VS Code / Excel / 系统更新 / 邮件</p>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon">👁</div>
+      <h4>透明度调节</h4>
+      <p>半透明叠加桌面，边工作边看</p>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon">📌</div>
+      <h4>窗口置顶</h4>
+      <p>始终在最前方，不遮挡工作</p>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon">🚫</div>
+      <h4>无任务栏图标</h4>
+      <p>不在任务栏显示，不留痕迹</p>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon">📺</div>
+      <h4>多格式支持</h4>
+      <p>直播流 / 视频 / 网页，通通兼容</p>
+    </div>
   </div>
-  <div class="faq-item">
-    <h3>需要安装吗？</h3>
-    <p>不需要。下载 exe 文件后双击即可运行，不写入注册表，删除文件即卸载。</p>
+</div>
+
+<!-- Shortcuts -->
+<div class="section">
+  <h2 class="section-title">快捷键</h2>
+  <p class="section-desc">记住这几个就够了</p>
+  <div class="shortcuts-table">
+    <div class="shortcut-row"><span><kbd>F8</kbd></span><span>老板键：瞬间隐藏 / 显示</span></div>
+    <div class="shortcut-row"><span><kbd>Ctrl</kbd> + <kbd>`</kbd></span><span>切换伪装 / 观赛模式</span></div>
+    <div class="shortcut-row"><span><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>↑</kbd></span><span>增加透明度</span></div>
+    <div class="shortcut-row"><span><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>↓</kbd></span><span>降低透明度</span></div>
   </div>
-  <div class="faq-item">
-    <h3>窗口找不到了？</h3>
-    <p>按 F8 键切换显示/隐藏，或点击右下角系统托盘的蓝色圆形图标。</p>
-  </div>
-  <div class="faq-item">
-    <h3>怎么完全退出？</h3>
-    <p>右键点击右下角系统托盘图标 → 退出。</p>
+</div>
+
+<!-- FAQ -->
+<div class="section">
+  <h2 class="section-title">常见问题</h2>
+  <p class="section-desc">你可能想知道的</p>
+  <div class="faq-list">
+    <div class="faq-item">
+      <h3>真的免费吗？</h3>
+      <p>完全免费，无隐藏收费，无广告，开源项目。不像某些摸鱼软件动辄收费几百块。</p>
+    </div>
+    <div class="faq-item">
+      <h3>会被 IT 部门发现吗？</h3>
+      <p>鱼隐不在任务栏显示图标，窗口可调节透明度，还有老板键一键隐藏。正常使用基本不可能被发现。</p>
+    </div>
+    <div class="faq-item">
+      <h3>需要安装吗？</h3>
+      <p>不需要。下载 exe 文件后双击即可运行，不写入注册表，不残留文件，删除 exe 即为卸载。</p>
+    </div>
+    <div class="faq-item">
+      <h3>Windows 提示"未知发布者"？</h3>
+      <p>点击"更多信息" → "仍要运行"即可。这是因为没有购买代码签名证书（要花钱），软件本身是安全的。</p>
+    </div>
+    <div class="faq-item">
+      <h3>窗口找不到了？</h3>
+      <p>按 F8 键切换显示/隐藏，或点击右下角系统托盘的蓝色圆形图标。</p>
+    </div>
+    <div class="faq-item">
+      <h3>怎么完全退出？</h3>
+      <p>右键点击右下角系统托盘图标 → 退出。</p>
+    </div>
   </div>
 </div>
 
