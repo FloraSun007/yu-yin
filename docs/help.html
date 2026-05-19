@@ -92,10 +92,14 @@ a { color: #58a6ff; text-decoration: none; }
 }
 .warn-box strong { color: #d29922; }
 
-/* Screenshot placeholder */
+/* Screenshot */
 .screenshot {
   background: #161b22; border: 1px solid #21262d; border-radius: 10px;
-  padding: 32px; text-align: center; margin: 20px 0; color: #484f58; font-size: 14px;
+  padding: 8px; text-align: center; margin: 20px 0; overflow: hidden;
+}
+.screenshot img {
+  max-width: 100%; border-radius: 6px; display: block;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
 }
 
 /* Shortcut table */
@@ -187,7 +191,7 @@ a { color: #58a6ff; text-decoration: none; }
           <li><strong>伪装主题</strong> — 一键切换 VS Code / Excel / 系统更新 / 邮件界面</li>
           <li><strong>老板键</strong> — 有人来了？一键隐藏，不留痕迹</li>
           <li><strong>透明度调节</strong> — 半透明窗口，背后有人也不怕</li>
-          <li><strong>完全免费</strong> — 无广告、无收费、开源项目</li>
+          <li><strong>限时免费</strong> — 无广告、无隐藏收费</li>
         </ul>
 
         <h2>免责声明</h2>
@@ -223,7 +227,7 @@ a { color: #58a6ff; text-decoration: none; }
 
         <h2>首次启动</h2>
         <p>启动后你会看到鱼隐的主界面：</p>
-        <div class="screenshot">主界面截图 — 内置直播源列表</div>
+        <div class="screenshot"><img src="screenshot-live.jpg" alt="鱼隐主界面 — 内置直播源列表"></div>
         <ul>
           <li>左侧是<strong>直播源列表</strong>（CCTV5、CCTV5+、CCTV16）</li>
           <li>点击任意直播源即可开始观看</li>
@@ -238,7 +242,7 @@ a { color: #58a6ff; text-decoration: none; }
 
         <h2>内置直播源</h2>
         <p>启动后在首页即可看到内置直播源：</p>
-        <div class="screenshot">直播源列表示意图</div>
+        <div class="screenshot"><img src="screenshot-live.jpg" alt="直播源列表"></div>
 
         <table class="shortcut-table">
           <thead><tr><th>频道</th><th>内容</th></tr></thead>
@@ -316,6 +320,8 @@ a { color: #58a6ff; text-decoration: none; }
             <tr><td><strong>七猫免费小说</strong></td><td>免费小说平台，无需付费即可阅读</td></tr>
           </tbody>
         </table>
+
+        <div class="screenshot"><img src="screenshot-novel.png" alt="小说阅读界面"></div>
 
         <div class="tip-box">
           <strong>小窗阅读：</strong>鱼隐的窗口可以缩到很小，放在屏幕角落，配合透明度调节，摸鱼追更两不误。
@@ -456,7 +462,7 @@ a { color: #58a6ff; text-decoration: none; }
         <h1>常见问题</h1>
 
         <div class="faq-q">真的免费吗？</div>
-        <div class="faq-a">完全免费，无隐藏收费，无广告，开源项目。源码在 <a href="https://github.com/FloraSun007/yu-yin" target="_blank">GitHub</a> 上公开。</div>
+        <div class="faq-a">限时免费，无隐藏收费，无广告。</div>
 
         <div class="faq-q">会被 IT 部门发现吗？</div>
         <div class="faq-a">鱼隐不在任务栏显示图标，窗口可调节透明度，还有老板键一键隐藏。只要你自己不暴露，别人很难发现。</div>
