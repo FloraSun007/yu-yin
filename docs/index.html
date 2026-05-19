@@ -313,7 +313,7 @@ a { color: #60a5fa; text-decoration: none; }
   <a href="#" class="logo"><img src="logo.png" alt="鱼隐">鱼<span>隐</span></a>
   <div class="nav-links">
     <a href="help.html">使用文档</a>
-    <a href="#pricing">价格</a>
+    <a href="javascript:void(0)" onclick="document.getElementById('pricingModal').classList.add('open')">价格</a>
     <a href="#contact">联系我们</a>
   </div>
 </nav>
@@ -493,31 +493,28 @@ a { color: #60a5fa; text-decoration: none; }
 
 <div class="section-divider"></div>
 
-<!-- Pricing -->
-<div class="section" id="pricing">
-  <h2 class="section-title">价格</h2>
-  <p class="section-sub">当前完全免费，未来可期</p>
-  <div class="pricing-card">
-    <div class="plan-name">鱼隐完整版</div>
-    <div class="price">¥0</div>
-    <div class="price-note">当前免费，无隐藏收费</div>
-    <ul class="price-features">
-      <li>内置 CCTV5 / CCTV5+ / CCTV16 直播</li>
-      <li>支持自定义 m3u8 / mp4 / webm 播放</li>
-      <li>内置起点中文网、七猫免费小说</li>
-      <li>自由浏览任意网页</li>
-      <li>VS Code / Excel / 系统更新 / 邮件伪装</li>
-      <li>老板键一键隐藏</li>
-      <li>窗口透明度调节</li>
-      <li>隐身运行，无任务栏图标</li>
-      <li>免安装，双击即用</li>
-      <li>无广告，无功能限制</li>
-    </ul>
-    <a class="pricing-btn" href="https://github.com/FloraSun007/yu-yin/releases/download/v1.0.0/yuyin1.0.0.exe" download onclick="_hmt.push(['_trackEvent', 'download', 'click', 'yuyin1.0.0-pricing'])">立即下载</a>
+<!-- Pricing Modal -->
+<div class="modal-overlay" id="pricingModal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal-card" style="width:400px;">
+    <button class="mc-close" onclick="document.getElementById('pricingModal').classList.remove('open')">&times;</button>
+    <div style="padding:36px 32px 28px;text-align:center;">
+      <div class="plan-name" style="font-size:14px;font-weight:600;color:#34d399;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">鱼隐完整版</div>
+      <div style="font-size:56px;font-weight:900;color:#fff;margin:8px 0 0;letter-spacing:-2px;">¥0</div>
+      <div style="font-size:14px;color:#3f3f46;margin-bottom:24px;">限时免费，无隐藏收费</div>
+      <ul style="text-align:left;margin-bottom:28px;list-style:none;padding:0;">
+        <li style="font-size:14px;color:#a1a1aa;margin-bottom:10px;padding-left:28px;position:relative;">内置 CCTV5 / CCTV5+ / CCTV16 直播</li>
+        <li style="font-size:14px;color:#a1a1aa;margin-bottom:10px;padding-left:28px;position:relative;">支持自定义 m3u8 / mp4 / webm 播放</li>
+        <li style="font-size:14px;color:#a1a1aa;margin-bottom:10px;padding-left:28px;position:relative;">内置起点中文网、七猫免费小说</li>
+        <li style="font-size:14px;color:#a1a1aa;margin-bottom:10px;padding-left:28px;position:relative;">自由浏览任意网页</li>
+        <li style="font-size:14px;color:#a1a1aa;margin-bottom:10px;padding-left:28px;position:relative;">VS Code / Excel / 系统更新 / 邮件伪装</li>
+        <li style="font-size:14px;color:#a1a1aa;margin-bottom:10px;padding-left:28px;position:relative;">老板键一键隐藏</li>
+        <li style="font-size:14px;color:#a1a1aa;margin-bottom:10px;padding-left:28px;position:relative;">隐身运行，无任务栏图标</li>
+        <li style="font-size:14px;color:#a1a1aa;padding-left:28px;position:relative;">免安装，双击即用</li>
+      </ul>
+      <a class="pricing-btn" href="https://github.com/FloraSun007/yu-yin/releases/download/v1.0.0/yuyin1.0.0.exe" download onclick="_hmt.push(['_trackEvent', 'download', 'click', 'yuyin1.0.0-pricing'])">立即下载</a>
+    </div>
   </div>
 </div>
-
-<div class="section-divider"></div>
 
 <!-- Contact -->
 <div class="section" id="contact">
