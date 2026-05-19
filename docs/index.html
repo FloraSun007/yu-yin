@@ -253,6 +253,46 @@ a { color: #818cf8; text-decoration: none; }
 .footer-card .fc-links a:hover { color: #818cf8; }
 .footer-card .fc-copy { margin-top: 24px; font-size: 12px; color: #27272a; }
 
+/* ── About Modal ── */
+.modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 2000;
+  background: rgba(0,0,0,0.6); backdrop-filter: blur(6px);
+  align-items: center; justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal-card {
+  position: relative; width: 340px;
+  background: #111113; border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px; overflow: hidden;
+  animation: modalIn 0.25s ease-out;
+}
+@keyframes modalIn { from { opacity: 0; transform: scale(0.92) translateY(12px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+.modal-card .mc-banner {
+  height: 80px;
+  background: linear-gradient(135deg, #312e81, #4c1d95, #581c87);
+  position: relative;
+}
+.modal-card .mc-avatar {
+  width: 72px; height: 72px; border-radius: 50%;
+  border: 3px solid #111113;
+  position: absolute; bottom: -36px; left: 50%; transform: translateX(-50%);
+  background: linear-gradient(135deg, #818cf8, #c084fc);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px; color: #fff; font-weight: 900;
+  box-shadow: 0 4px 20px rgba(99,102,241,0.3);
+}
+.modal-card .mc-body { padding: 48px 28px 28px; text-align: center; }
+.modal-card .mc-body .mc-name { font-size: 20px; font-weight: 800; color: #fff; margin-bottom: 2px; }
+.modal-card .mc-body .mc-tag { font-size: 12px; color: #818cf8; font-weight: 600; margin-bottom: 16px; }
+.modal-card .mc-body .mc-bio { font-size: 14px; color: #71717a; line-height: 1.8; }
+.modal-card .mc-body .mc-bio em { color: #a78bfa; font-style: normal; font-weight: 600; }
+.modal-card .mc-close {
+  position: absolute; top: 8px; right: 12px; background: none; border: none;
+  color: rgba(255,255,255,0.5); font-size: 20px; cursor: pointer; padding: 4px 8px;
+  transition: color 0.15s;
+}
+.modal-card .mc-close:hover { color: #fff; }
+
 /* ── Divider ── */
 .section-divider {
   max-width: 960px; margin: 0 auto; height: 1px;
@@ -527,9 +567,28 @@ a { color: #818cf8; text-decoration: none; }
     <div class="fc-line"></div>
     <div class="fc-links">
       <a href="help.html">使用文档</a>
-      <a href="https://github.com/FloraSun007/yu-yin/issues" target="_blank">反馈建议</a>
+      <a href="javascript:void(0)" onclick="document.getElementById('aboutModal').classList.add('open')">关于我们</a>
     </div>
     <div class="fc-copy">Made with courage · YuYin</div>
+  </div>
+</div>
+
+<!-- About Modal -->
+<div class="modal-overlay" id="aboutModal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal-card">
+    <button class="mc-close" onclick="document.getElementById('aboutModal').classList.remove('open')">&times;</button>
+    <div class="mc-banner">
+      <div class="mc-avatar">鱼</div>
+    </div>
+    <div class="mc-body">
+      <div class="mc-name">鱼隐团队</div>
+      <div class="mc-tag">摸鱼事业部的日常</div>
+      <div class="mc-bio">
+        我们是一群<em>认真上班</em>的打工人<br>
+        顺便做了个摸鱼神器<br>
+        世界观：<em>上班不可怕，不能看球才可怕</em>
+      </div>
+    </div>
   </div>
 </div>
 
