@@ -1,5 +1,6 @@
-import { app, BrowserWindow, ipcMain, screen } from 'electron';
+import { app, BrowserWindow, ipcMain, screen, nativeImage } from 'electron';
 import * as path from 'path';
+import * as fs from 'fs';
 import { createTray } from './tray';
 import { registerShortcuts, unregisterShortcuts } from './shortcuts';
 
@@ -12,6 +13,12 @@ app.commandLine.appendSwitch('ignore-gpu-blocklist');
 let mainWindow: BrowserWindow | null = null;
 
 function createWindow() {
+  const iconPath = path.join(__dirname, '..', '..', 'assets', 'icon.ico');
+  let appIcon: Electron.NativeImage | undefined;
+  if (fs.existsSync(iconPath)) {
+    appIcon = nativeImage.createFromBuffer(fs.readFileSync(iconPath));
+  }
+
   mainWindow = new BrowserWindow({
     width: 600,
     height: 450,
@@ -23,6 +30,7 @@ function createWindow() {
     skipTaskbar: true,
     resizable: true,
     backgroundColor: '#00000000',
+    icon: appIcon,
     webPreferences: {
       preload: path.join(__dirname, '..', 'preload', 'index.js'),
       contextIsolation: true,

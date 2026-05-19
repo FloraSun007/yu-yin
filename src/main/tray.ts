@@ -1,29 +1,25 @@
 import { Tray, Menu, nativeImage, BrowserWindow } from 'electron';
-import { deflateSync } from 'zlib';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
-// --- Programmatic icon generation (16x16 blue circle PNG) ---
-
-function crc32(buf: Buffer): number {
-  let crc = 0xffffffff;
-  for (let i = 0; i < buf.length; i++) {
-    crc ^= buf[i];
-    for (let j = 0; j < 8; j++) {
-      crc = crc & 1 ? (crc >>> 1) ^ 0xedb88320 : crc >>> 1;
-    }
-  }
-  return (crc ^ 0xffffffff) >>> 0;
-}
-
-function pngChunk(type: string, data: Buffer): Buffer {
-  const len = Buffer.alloc(4);
-  len.writeUInt32BE(data.length);
-  const typeB = Buffer.from(type, 'ascii');
-  const crcB = Buffer.alloc(4);
-  crcB.writeUInt32BE(crc32(Buffer.concat([typeB, data])));
-  return Buffer.concat([len, typeB, data, crcB]);
-}
+// --- Tray icon from assets/icon.ico ---
 
 function createIcon(): Electron.NativeImage {
+  const icoPath = join(__dirname, '../../assets/icon.ico');
+  try {
+    const buf = readFileSync(icoPath);
+    return nativeImage.createFromBuffer(buf, {
+      width: 16,
+      height: 16,
+    });
+  } catch {
+    // Fallback: small blue circle
+    return nativeImage.createFromBuffer(createFallbackPng());
+  }
+}
+
+function createFallbackPng(): Buffer {
+  const { deflateSync } = require('zlib');
   const w = 16, h = 16;
   const raw = Buffer.alloc(h * (1 + w * 4));
 
@@ -34,12 +30,30 @@ function createIcon(): Electron.NativeImage {
       const px = row + 1 + x * 4;
       const dx = x - 7.5, dy = y - 7.5;
       if (Math.sqrt(dx * dx + dy * dy) < 6.5) {
-        raw[px] = 66;      // R
-        raw[px + 1] = 133;  // G
-        raw[px + 2] = 244;  // B
-        raw[px + 3] = 255;  // A
+        raw[px] = 59;
+        raw[px + 1] = 130;
+        raw[px + 2] = 246;
+        raw[px + 3] = 255;
       }
     }
+  }
+
+  function crc32(buf: Buffer): number {
+    let crc = 0xffffffff;
+    for (let i = 0; i < buf.length; i++) {
+      crc ^= buf[i];
+      for (let j = 0; j < 8; j++) crc = crc & 1 ? (crc >>> 1) ^ 0xedb88320 : crc >>> 1;
+    }
+    return (crc ^ 0xffffffff) >>> 0;
+  }
+
+  function pngChunk(type: string, data: Buffer): Buffer {
+    const len = Buffer.alloc(4);
+    len.writeUInt32BE(data.length);
+    const typeB = Buffer.from(type, 'ascii');
+    const crcB = Buffer.alloc(4);
+    crcB.writeUInt32BE(crc32(Buffer.concat([typeB, data])));
+    return Buffer.concat([len, typeB, data, crcB]);
   }
 
   const sig = Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]);
@@ -49,14 +63,12 @@ function createIcon(): Electron.NativeImage {
   ihdr[8] = 8;
   ihdr[9] = 6;
 
-  const png = Buffer.concat([
+  return Buffer.concat([
     sig,
     pngChunk('IHDR', ihdr),
     pngChunk('IDAT', deflateSync(raw)),
     pngChunk('IEND', Buffer.alloc(0)),
   ]);
-
-  return nativeImage.createFromBuffer(png);
 }
 
 // --- Tray management ---

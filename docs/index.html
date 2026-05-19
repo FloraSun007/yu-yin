@@ -28,7 +28,8 @@ a { color: #60a5fa; text-decoration: none; }
   background: rgba(9,9,11,0.7); backdrop-filter: blur(16px) saturate(1.4);
   border-bottom: 1px solid rgba(255,255,255,0.04);
 }
-.navbar .logo { font-size: 22px; font-weight: 900; color: #fff; letter-spacing: -0.5px; }
+.navbar .logo { display: flex; align-items: center; gap: 8px; font-size: 22px; font-weight: 900; color: #fff; letter-spacing: -0.5px; }
+.navbar .logo img { width: 32px; height: 32px; }
 .navbar .logo span { background: linear-gradient(135deg, #60a5fa, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .navbar .nav-links { display: flex; gap: 4px; }
 .navbar .nav-links a {
@@ -307,7 +308,7 @@ a { color: #60a5fa; text-decoration: none; }
 
 <!-- Navbar -->
 <nav class="navbar">
-  <a href="#" class="logo">鱼<span>隐</span></a>
+  <a href="#" class="logo"><img src="logo.png" alt="鱼隐">鱼<span>隐</span></a>
   <div class="nav-links">
     <a href="help.html">使用文档</a>
     <a href="#pricing">价格</a>
@@ -317,7 +318,7 @@ a { color: #60a5fa; text-decoration: none; }
 
 <!-- Hero -->
 <div class="hero">
-  <h1>鱼<span>隐</span></h1>
+  <h1><img src="logo.png" alt="鱼隐" style="width:64px;height:64px;vertical-align:middle;margin-right:12px;">鱼<span>隐</span></h1>
   <p class="tagline">上班摸鱼，理直气壮</p>
   <a class="download-btn" href="https://github.com/FloraSun007/yu-yin/releases/download/v1.0.0/yuyin1.0.0.exe" download onclick="_hmt.push(['_trackEvent', 'download', 'click', 'yuyin1.0.0'])">免费下载 Windows 版</a>
   <p class="download-hint">Windows 10/11 · 免安装 · 双击即用</p>
@@ -543,7 +544,7 @@ a { color: #60a5fa; text-decoration: none; }
 </div>
 
 <div class="footer">
-  <div class="fc-name">鱼<span>隐</span></div>
+  <div class="fc-name"><img src="logo.png" alt="鱼隐" style="width:28px;height:28px;vertical-align:middle;margin-right:6px;">鱼<span>隐</span></div>
   <div class="fc-slogan">打工人的底气，藏在屏幕角落里</div>
   <div class="fc-copy">Made with courage · YuYin</div>
 </div>
