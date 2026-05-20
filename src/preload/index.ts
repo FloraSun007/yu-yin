@@ -17,4 +17,12 @@ contextBridge.exposeInMainWorld('api', {
     ipcRenderer.on('opacity-changed', handler);
     return () => ipcRenderer.removeListener('opacity-changed', handler);
   },
+
+  // Points & Auth
+  pointsInit: () => ipcRenderer.invoke('points:init'),
+  pointsGetStatus: () => ipcRenderer.invoke('points:get-status'),
+  pointsStartConsume: () => ipcRenderer.send('points:start-consume'),
+  pointsStopConsume: () => ipcRenderer.send('points:stop-consume'),
+  pointsPurchaseCreate: (productId: string) => ipcRenderer.invoke('points:purchase-create', productId),
+  pointsPurchaseStatus: (tradeNo: string) => ipcRenderer.invoke('points:purchase-status', tradeNo),
 });

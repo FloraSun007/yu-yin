@@ -1,12 +1,29 @@
 /* ---- Top bar ---- */
+.top-bar-container { z-index: 20; }
+.top-bar-container.top-bar-container-static {
+  position: relative; pointer-events: auto;
+}
+.top-bar-container.top-bar-container-overlay {
+  position: absolute; top: 0; left: 0; right: 0; pointer-events: none;
+}
+.top-bar-trigger {
+  position: absolute; top: 0; left: 0; right: 0; height: 8px;
+  pointer-events: auto; cursor: default;
+}
 .top-bar {
-  position: relative; z-index: 20;
   height: 32px;
   display: flex; align-items: center;
-  padding: 0 6px; flex-shrink: 0;
+  padding: 0 6px;
   background: rgba(18, 18, 24, 0.6);
   backdrop-filter: blur(8px);
 }
+.top-bar.top-bar-static { position: relative; pointer-events: auto; }
+.top-bar.top-bar-overlay {
+  pointer-events: auto;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.top-bar.top-bar-visible { opacity: 1; transform: translateY(0); }
+.top-bar.top-bar-hidden { opacity: 0; transform: translateY(-100%); pointer-events: none; }
 .top-bar-left { display: flex; align-items: center; gap: 6px; }
 .top-bar-spacer { flex: 1; height: 100%; cursor: grab; }
 .top-bar-spacer:active { cursor: grabbing; }

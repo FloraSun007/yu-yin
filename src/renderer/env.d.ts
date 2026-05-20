@@ -11,6 +11,13 @@ declare global {
       stopDrag: () => void;
       onToggleMode: (callback: () => void) => () => void;
       onOpacityChanged: (callback: (opacity: number) => void) => () => void;
+
+      pointsInit: () => Promise<PointsStatus | { error: string }>;
+      pointsGetStatus: () => Promise<PointsStatus>;
+      pointsStartConsume: () => void;
+      pointsStopConsume: () => void;
+      pointsPurchaseCreate: (productId: string) => Promise<{ trade_no: string; qr_url: string; amount: number } | { error: string }>;
+      pointsPurchaseStatus: (tradeNo: string) => Promise<{ status: string; auth_type?: string; points_balance?: number } | { error: string }>;
     };
   }
 }
@@ -22,4 +29,13 @@ export interface PresetSource {
   name: string;
   urls: string[];
   note?: string;
+}
+
+export interface PointsStatus {
+  balance: number;
+  authType: string;
+  authExpireAt: string | null;
+  isAuthorized: boolean;
+  referralCode: string;
+  guestId: string;
 }

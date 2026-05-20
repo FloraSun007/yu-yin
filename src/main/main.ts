@@ -3,6 +3,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { createTray } from './tray';
 import { registerShortcuts, unregisterShortcuts } from './shortcuts';
+import * as points from './points';
 
 app.commandLine.appendSwitch('disable-web-security');
 app.commandLine.appendSwitch('disable-site-isolation-trials');
@@ -83,6 +84,37 @@ function createWindow() {
   });
   ipcMain.on('window:stop-drag', () => {
     if (dragInterval) { clearInterval(dragInterval); dragInterval = null; }
+  });
+
+  // ---- Points & Auth IPC ----
+  ipcMain.handle('points:init', async () => {
+    try {
+      await points.initOrSync();
+      return points.getStatus();
+    } catch (e: any) {
+      return { error: e.message };
+    }
+  });
+
+  ipcMain.handle('points:get-status', () => points.getStatus());
+
+  ipcMain.on('points:start-consume', () => points.startConsumption());
+  ipcMain.on('points:stop-consume', () => points.stopConsumption());
+
+  ipcMain.handle('points:purchase-create', async (_e, productId: string) => {
+    try {
+      return await points.createPurchase(productId);
+    } catch (e: any) {
+      return { error: e.message };
+    }
+  });
+
+  ipcMain.handle('points:purchase-status', async (_e, tradeNo: string) => {
+    try {
+      return await points.checkPurchaseStatus(tradeNo);
+    } catch (e: any) {
+      return { error: e.message };
+    }
   });
 }
 
