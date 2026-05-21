@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, screen, nativeImage, shell } from 'electron';
+import { app, BrowserWindow, ipcMain, screen, nativeImage, shell, protocol } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as os from 'os';
@@ -12,10 +12,26 @@ app.commandLine.appendSwitch('enable-gpu-rasterization');
 app.commandLine.appendSwitch('enable-zero-copy');
 app.commandLine.appendSwitch('ignore-gpu-blocklist');
 
+// Register local-file protocol for assets
+protocol.registerSchemesAsPrivileged([
+  { scheme: 'local-assets', privileges: { bypassCSP: true, stream: true, supportFetchAPI: true } },
+]);
+
 let mainWindow: BrowserWindow | null = null;
 
 function createWindow() {
-  const iconPath = path.join(__dirname, '..', '..', 'assets', 'icon.ico');
+  // Register local-assets protocol for serving files from resources
+  protocol.registerFileProtocol('local-assets', (_request, callback) => {
+    const assetsDir = app.isPackaged
+      ? process.resourcesPath
+      : path.join(__dirname, '..', '..', 'assets');
+    const fileName = path.basename(_request.url.replace('local-assets://', ''));
+    callback(path.join(assetsDir, fileName));
+  });
+
+  const iconPath = app.isPackaged
+    ? path.join(process.resourcesPath, 'icon.ico')
+    : path.join(__dirname, '..', '..', 'assets', 'icon.ico');
   let appIcon: Electron.NativeImage | undefined;
   if (fs.existsSync(iconPath)) {
     appIcon = nativeImage.createFromBuffer(fs.readFileSync(iconPath));
@@ -117,6 +133,14 @@ function createWindow() {
   ipcMain.handle('points:purchase-status', async (_e, tradeNo: string) => {
     try {
       return await points.checkPurchaseStatus(tradeNo);
+    } catch (e: any) {
+      return { error: e.message };
+    }
+  });
+
+  ipcMain.handle('points:purchase-claim', async (_e, tradeNo: string) => {
+    try {
+      return await points.claimPurchase(tradeNo);
     } catch (e: any) {
       return { error: e.message };
     }

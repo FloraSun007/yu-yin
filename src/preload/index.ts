@@ -26,4 +26,5 @@ contextBridge.exposeInMainWorld('api', {
   pointsStopConsume: () => ipcRenderer.send('points:stop-consume'),
   pointsPurchaseCreate: (productId: string) => ipcRenderer.invoke('points:purchase-create', productId),
   pointsPurchaseStatus: (tradeNo: string) => ipcRenderer.invoke('points:purchase-status', tradeNo),
+  pointsPurchaseClaim: (tradeNo: string) => ipcRenderer.invoke('points:purchase-claim', tradeNo),
 });

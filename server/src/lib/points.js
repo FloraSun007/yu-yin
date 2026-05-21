@@ -140,7 +140,7 @@ function handleReferral(db, body) {
   return success({ success: true, bonus_points: 1000 });
 }
 
-// POST /purchase/create — 创建支付订单
+// POST /purchase/create — 创建支付订单（随机金额防白嫖）
 function handlePurchaseCreate(db, body, guestId) {
   const { product_id } = body;
 
@@ -160,24 +160,42 @@ function handlePurchaseCreate(db, body, guestId) {
     return error(1003, '账户不存在');
   }
 
+  // 检查是否有未支付的订单
+  const pending = queryOne(db,
+    "SELECT * FROM purchases WHERE account_id = ? AND status = 'pending' AND created_at > datetime('now', '-30 minutes')",
+    [account.id]
+  );
+  if (pending) {
+    return error(2002, '您有未完成的订单，请先完成或等待过期');
+  }
+
+  // 每日下单次数限制（防刷）
+  const todayClaims = queryOne(db,
+    "SELECT COUNT(*) as cnt FROM purchases WHERE account_id = ? AND status = 'claimed' AND date(created_at) = date('now')",
+    [account.id]
+  );
+  if (todayClaims && todayClaims.cnt >= 3) {
+    return error(2003, '今日下单次数已达上限');
+  }
+
+  // 生成随机金额：原价 + 0.01~0.99 随机尾数，方便对账
+  const randomCents = Math.floor(Math.random() * 99) + 1;
+  const actualCents = product.cents + randomCents;
+
   const { generateTradeNo } = require('../lib/utils');
   const tradeNo = generateTradeNo();
 
   db.run(
     `INSERT INTO purchases (account_id, product_id, amount_cents, trade_no) VALUES (?, ?, ?, ?)`,
-    [account.id, product_id, product.cents, tradeNo]
+    [account.id, product_id, actualCents, tradeNo]
   );
   save();
 
-  // TODO: 调用支付宝API生成真实二维码URL
-  // MVP阶段返回模拟数据
-  const qrUrl = `https://qr.alipay.com/${tradeNo}`;
-
   return success({
     trade_no: tradeNo,
-    qr_url: qrUrl,
-    amount: product.cents / 100,
-    expire_at: new Date(Date.now() + 3 * 60 * 1000).toISOString()
+    amount: actualCents / 100,
+    base_amount: product.cents / 100,
+    expire_at: new Date(Date.now() + 30 * 60 * 1000).toISOString()
   });
 }
 

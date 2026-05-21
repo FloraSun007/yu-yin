@@ -19,6 +19,7 @@ declare global {
       pointsStopConsume: () => void;
       pointsPurchaseCreate: (productId: string) => Promise<{ trade_no: string; qr_url: string; amount: number } | { error: string }>;
       pointsPurchaseStatus: (tradeNo: string) => Promise<{ status: string; auth_type?: string; points_balance?: number } | { error: string }>;
+      pointsPurchaseClaim: (tradeNo: string) => Promise<{ status: string } | { error: string }>;
     };
   }
 }

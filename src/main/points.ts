@@ -148,7 +148,16 @@ async function checkPurchaseStatus(tradeNo: string): Promise<{ status: string; a
   if (res.code !== 0) throw new Error(res.msg);
 
   if (res.data.status === 'paid' && currentUser) {
-    await initOrSync(); // refresh all data from server
+    await initOrSync();
+  }
+  return res.data;
+}
+
+async function claimPurchase(tradeNo: string): Promise<{ status: string }> {
+  const res = await apiRequest('POST', '/purchase/claim', { trade_no: tradeNo });
+  if (res.code !== 0) throw new Error(res.msg);
+  if (currentUser) {
+    await initOrSync();
   }
   return res.data;
 }
@@ -178,5 +187,6 @@ export {
   createPurchase,
   checkPurchaseStatus,
   verifyReferral,
+  claimPurchase,
   getStatus,
 };

@@ -78,6 +78,37 @@ fastify.post('/v1/purchase/callback', async (req) => {
   return { code: 0, msg: 'ok' };
 });
 
+// POST /purchase/claim — 用户自报已支付（个人收款码模式）
+fastify.post('/v1/purchase/claim', async (req) => {
+  const { trade_no } = req.body;
+  const db = getDB();
+  const { queryOne } = require('./lib/points');
+  const { save } = require('./db');
+
+  const purchase = queryOne(db, 'SELECT * FROM purchases WHERE trade_no = ?', [trade_no]);
+  if (!purchase) {
+    return { code: 2001, msg: '订单不存在' };
+  }
+  if (purchase.status === 'paid' || purchase.status === 'claimed') {
+    return { code: 1, msg: '订单已处理' };
+  }
+
+  // 标记为 claimed（待人工核实），先发放权益
+  db.run("UPDATE purchases SET status = 'claimed', paid_at = datetime('now') WHERE id = ?", [purchase.id]);
+
+  // 根据商品类型更新账户（先发放，后核实）
+  if (purchase.product_id === 'energy_6') {
+    db.run('UPDATE accounts SET points_balance = points_balance + 6000 WHERE id = ?', [purchase.account_id]);
+  } else if (purchase.product_id === 'half_year') {
+    db.run("UPDATE accounts SET auth_type = 'half_year', auth_expire_at = datetime('now', '+183 days') WHERE id = ?", [purchase.account_id]);
+  } else if (purchase.product_id === 'permanent') {
+    db.run("UPDATE accounts SET auth_type = 'permanent' WHERE id = ?", [purchase.account_id]);
+  }
+
+  save();
+  return { code: 0, msg: 'ok' };
+});
+
 // Start
 async function start() {
   await initDB();

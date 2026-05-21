@@ -30,7 +30,7 @@ export default function App() {
   const points = usePointsState();
   const [activeModule, setActiveModule] = useState<ModuleId>('livevideo');
   const [showPurchase, setShowPurchase] = useState(false);
-  const [paymentData, setPaymentData] = useState<{ tradeNo: string; qrUrl: string; amount: number } | null>(null);
+  const [paymentData, setPaymentData] = useState<{ tradeNo: string; amount: number } | null>(null);
 
   const hasActiveContent = !!(video.sourceUrl || novel.currentUrl);
   const currentBack = activeModule === 'livevideo' && video.sourceUrl
@@ -42,7 +42,7 @@ export default function App() {
   const handlePurchase = useCallback(async (productId: string) => {
     const res = await window.api.pointsPurchaseCreate(productId);
     if ('error' in res) return;
-    setPaymentData({ tradeNo: res.trade_no, qrUrl: res.qr_url, amount: res.amount });
+    setPaymentData({ tradeNo: res.trade_no, amount: res.amount });
   }, []);
 
   const handlePaymentSuccess = useCallback(async () => {
@@ -124,7 +124,6 @@ export default function App() {
       {paymentData && (
         <PaymentModal
           tradeNo={paymentData.tradeNo}
-          qrUrl={paymentData.qrUrl}
           amount={paymentData.amount}
           onClose={() => setPaymentData(null)}
           onSuccess={handlePaymentSuccess}
