@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, screen, nativeImage } from 'electron';
+import { app, BrowserWindow, ipcMain, screen, nativeImage, shell } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as os from 'os';
@@ -123,7 +123,28 @@ function createWindow() {
   });
 }
 
-app.whenReady().then(createWindow);
+function createDesktopShortcut() {
+  if (!app.isPackaged) return;
+  const desktop = path.join(os.homedir(), 'Desktop');
+  const shortcutPath = path.join(desktop, '鱼隐.lnk');
+  if (fs.existsSync(shortcutPath)) return;
+
+  const exePath = app.getPath('exe');
+  const iconPath = path.join(process.resourcesPath, 'icon.ico');
+
+  shell.writeShortcutLink(shortcutPath, {
+    target: exePath,
+    icon: fs.existsSync(iconPath) ? iconPath : exePath,
+    iconIndex: 0,
+    appUserModelId: 'com.yuyin.app',
+    description: '鱼隐 - 工位摸鱼神器',
+  });
+}
+
+app.whenReady().then(() => {
+  createDesktopShortcut();
+  createWindow();
+});
 
 app.on('window-all-closed', () => {
   unregisterShortcuts();
