@@ -12,7 +12,8 @@ declare global {
       onToggleMode: (callback: () => void) => () => void;
       onOpacityChanged: (callback: (opacity: number) => void) => () => void;
 
-      pointsInit: () => Promise<PointsStatus | { error: string }>;
+      pointsIsFirstLaunch: () => Promise<boolean>;
+      pointsInit: (referralCode?: string) => Promise<PointsStatus | { error: string }>;
       pointsGetStatus: () => Promise<PointsStatus>;
       pointsStartConsume: () => void;
       pointsStopConsume: () => void;

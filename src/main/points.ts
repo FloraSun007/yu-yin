@@ -39,7 +39,7 @@ function apiRequest(method: string, path: string, body?: object): Promise<any> {
   });
 }
 
-async function initOrSync(): Promise<LocalUser> {
+async function initOrSync(referralCode?: string): Promise<LocalUser> {
   const local = readLocalUser();
   const deviceFp = getDeviceFp();
 
@@ -47,6 +47,11 @@ async function initOrSync(): Promise<LocalUser> {
     guest_id: local ? local.guest_id : generateGuestId(),
     device_fp: deviceFp,
   };
+
+  // Only pass referral_code for new users (no local data)
+  if (!local && referralCode) {
+    body.referral_code = referralCode;
+  }
 
   const res = await apiRequest('POST', '/init', body);
 

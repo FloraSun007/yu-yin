@@ -58,15 +58,23 @@ function handleInit(db, body) {
     account = queryOne(db, 'SELECT * FROM accounts WHERE guest_id = ?', [guest_id]);
   }
 
-  // 每日签到
+  // 每日签到（首次注册当天不额外加，从第二天起每天+50）
   let dailyRewardClaimed = false;
   const todayStr = today();
-  if (account.daily_reward_date !== todayStr) {
+  const isNewDay = account.daily_reward_date !== todayStr;
+  const hasPreviousLogin = account.daily_reward_date != null && account.daily_reward_date !== '';
+  if (isNewDay && hasPreviousLogin) {
+    // 非首次登录的新一天，发放每日奖励
     db.run('UPDATE accounts SET points_balance = points_balance + 50, daily_reward_date = ? WHERE id = ?',
       [todayStr, account.id]);
-    save();
-    dailyRewardClaimed = true;
     account.points_balance += 50;
+    dailyRewardClaimed = true;
+    save();
+    account.daily_reward_date = todayStr;
+  } else if (isNewDay && !hasPreviousLogin) {
+    // 首次注册，只标记日期，不加50
+    db.run('UPDATE accounts SET daily_reward_date = ? WHERE id = ?', [todayStr, account.id]);
+    save();
     account.daily_reward_date = todayStr;
   }
 
@@ -139,7 +147,7 @@ function handlePurchaseCreate(db, body, guestId) {
   const products = {
     energy_6: { cents: 600, points: 6000 },
     half_year: { cents: 4500, days: 183 },
-    permanent: { cents: 9800, permanent: true },
+    permanent: { cents: 18800, permanent: true },
   };
 
   const product = products[product_id];

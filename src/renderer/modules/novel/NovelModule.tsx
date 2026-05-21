@@ -17,7 +17,6 @@ export function NovelModule({ novel }: NovelModuleProps) {
         <div className="source-home">
           <div className="source-home-scroll">
             <div className="source-section">
-              <div className="source-section-title">小说源</div>
               {NOVEL_SOURCES.map((s) => (
                 <div
                   key={s.id}

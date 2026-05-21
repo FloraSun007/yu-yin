@@ -19,7 +19,8 @@ contextBridge.exposeInMainWorld('api', {
   },
 
   // Points & Auth
-  pointsInit: () => ipcRenderer.invoke('points:init'),
+  pointsIsFirstLaunch: () => ipcRenderer.invoke('points:is-first-launch'),
+  pointsInit: (referralCode?: string) => ipcRenderer.invoke('points:init', referralCode),
   pointsGetStatus: () => ipcRenderer.invoke('points:get-status'),
   pointsStartConsume: () => ipcRenderer.send('points:start-consume'),
   pointsStopConsume: () => ipcRenderer.send('points:stop-consume'),

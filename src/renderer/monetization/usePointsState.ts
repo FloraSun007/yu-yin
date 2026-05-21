@@ -11,10 +11,11 @@ export function usePointsState() {
     guestId: '',
   });
   const [loading, setLoading] = useState(true);
+  const [showReferralDialog, setShowReferralDialog] = useState(false);
 
-  const init = useCallback(async () => {
+  const init = useCallback(async (referralCode?: string) => {
     setLoading(true);
-    const res = await window.api.pointsInit();
+    const res = await window.api.pointsInit(referralCode);
     if ('error' in res) {
       setLoading(false);
       return;
@@ -29,8 +30,20 @@ export function usePointsState() {
   }, []);
 
   useEffect(() => {
-    init();
+    (async () => {
+      const isFirst = await window.api.pointsIsFirstLaunch();
+      if (isFirst) {
+        setShowReferralDialog(true);
+      } else {
+        init();
+      }
+    })();
   }, [init]);
 
-  return { status, loading, init, refresh };
+  const submitReferral = useCallback((code?: string) => {
+    setShowReferralDialog(false);
+    init(code || undefined);
+  }, [init]);
+
+  return { status, loading, init, refresh, showReferralDialog, submitReferral };
 }

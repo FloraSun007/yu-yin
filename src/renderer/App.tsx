@@ -32,7 +32,7 @@ export default function App() {
   const [showPurchase, setShowPurchase] = useState(false);
   const [paymentData, setPaymentData] = useState<{ tradeNo: string; qrUrl: string; amount: number } | null>(null);
 
-  const hasActiveContent = video.sourceUrl || novel.currentUrl;
+  const hasActiveContent = !!(video.sourceUrl || novel.currentUrl);
   const currentBack = activeModule === 'livevideo' && video.sourceUrl
     ? video.handleBack
     : activeModule === 'novel' && novel.currentUrl
@@ -107,7 +107,7 @@ export default function App() {
         </>
       )}
 
-      <PointsDisplay status={points.status} onPurchase={() => setShowPurchase(true)} onRefresh={points.refresh} />
+      <PointsDisplay status={points.status} onPurchase={() => setShowPurchase(true)} onRefresh={points.refresh} hasActiveContent={hasActiveContent} />
 
       {shell.showUnlockDialog && (
         <UnlockDialog
@@ -119,6 +119,8 @@ export default function App() {
         />
       )}
 
+      {points.showReferralDialog && <ReferralDialog onSubmit={points.submitReferral} />}
+
       {paymentData && (
         <PaymentModal
           tradeNo={paymentData.tradeNo}
@@ -128,6 +130,59 @@ export default function App() {
           onSuccess={handlePaymentSuccess}
         />
       )}
+    </div>
+  );
+}
+
+function ReferralDialog({ onSubmit }: { onSubmit: (code?: string) => void }) {
+  const [code, setCode] = useState('');
+  return (
+    <div style={{
+      position: 'absolute', inset: 0, zIndex: 50,
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(4px)'
+    }}>
+      <div style={{
+        background: '#1a1a24', border: '1px solid rgba(255,255,255,0.08)',
+        borderRadius: 14, padding: 28, width: 280, textAlign: 'center'
+      }}>
+        <div style={{ fontSize: 18, fontWeight: 700, color: '#e4e4e7', marginBottom: 8 }}>欢迎来到鱼隐</div>
+        <div style={{ fontSize: 12, color: '#71717a', marginBottom: 20 }}>输入推荐码，你和推荐人各得 1000 点</div>
+        <input
+          value={code}
+          onChange={(e) => setCode(e.target.value.toUpperCase())}
+          placeholder="选填，没有可跳过"
+          maxLength={6}
+          style={{
+            width: '100%', padding: '10px 14px', fontSize: 14,
+            background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
+            borderRadius: 8, color: '#e4e4e7', outline: 'none', marginBottom: 16,
+            textAlign: 'center', letterSpacing: 2,
+          }}
+        />
+        <div style={{ display: 'flex', gap: 10 }}>
+          <button
+            onClick={() => onSubmit()}
+            style={{
+              flex: 1, padding: '10px 0', fontSize: 14, fontWeight: 600,
+              background: 'transparent', color: '#71717a',
+              border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8, cursor: 'pointer'
+            }}
+          >
+            跳过
+          </button>
+          <button
+            onClick={() => onSubmit(code.trim() || undefined)}
+            style={{
+              flex: 1, padding: '10px 0', fontSize: 14, fontWeight: 600,
+              background: 'linear-gradient(135deg, #3b82f6, #2563eb)', color: '#fff',
+              border: 'none', borderRadius: 8, cursor: 'pointer'
+            }}
+          >
+            确定
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { app, BrowserWindow, ipcMain, screen, nativeImage } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
+import * as os from 'os';
 import { createTray } from './tray';
 import { registerShortcuts, unregisterShortcuts } from './shortcuts';
 import * as points from './points';
@@ -87,9 +88,13 @@ function createWindow() {
   });
 
   // ---- Points & Auth IPC ----
-  ipcMain.handle('points:init', async () => {
+  ipcMain.handle('points:is-first-launch', () => {
+    return !fs.existsSync(path.join(process.env.APPDATA || os.homedir(), 'yuyin', 'user.json'));
+  });
+
+  ipcMain.handle('points:init', async (_e, referralCode?: string) => {
     try {
-      await points.initOrSync();
+      await points.initOrSync(referralCode);
       return points.getStatus();
     } catch (e: any) {
       return { error: e.message };
