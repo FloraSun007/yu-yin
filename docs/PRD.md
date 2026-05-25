@@ -4,7 +4,7 @@
 > 更新日期: 2026-05-19
 > 文档说明: 模块化 PRD 总览，各子系统详见子文档
 > 发布仓库: https://github.com/FloraSun007/yu-yin
-> 官网下载: https://florasun007.github.io/yu-yin/
+> 官网下载: https://yuyinmoyu.com
 
 ---
 
@@ -109,7 +109,7 @@ ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/
 
 ### 5.3 分发渠道
 
-- **官网下载页**（面向普通用户）：https://florasun007.github.io/yu-yin/
+- **官网下载页**（面向普通用户）：https://yuyinmoyu.com
 - **GitHub Releases**（开发者/备份）：https://github.com/FloraSun007/yu-yin/releases
 - 官网由 GitHub Pages 托管，源文件为 `docs/` 目录，随仓库自动部署
 - 用户下载 Portable exe 后双击运行，Windows 可能提示"未知发布者"（无代码签名证书）

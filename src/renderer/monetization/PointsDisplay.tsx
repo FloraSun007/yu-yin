@@ -17,7 +17,7 @@ export function PointsDisplay({ status, onPurchase, onRefresh, hasActiveContent 
   if (status.isAuthorized || hasActiveContent) return null;
 
   const handleCopy = () => {
-    const text = `鱼隐 - 工位摸鱼神器，低调看直播看小说！下载地址：https://florasun007.github.io/yu-yin/ 推荐码：${status.referralCode}`;
+    const text = `鱼隐 - 工位摸鱼神器，低调看直播看小说！下载地址：https://yuyinmoyu.com 推荐码：${status.referralCode}`;
     navigator.clipboard.writeText(text).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
