@@ -1,7 +1,7 @@
 # 鱼隐 (YuYin) — 产品需求文档 (PRD)
 
-> 版本: 1.1.0
-> 更新日期: 2026-05-19
+> 版本: 1.2.0
+> 更新日期: 2026-05-28
 > 文档说明: 模块化 PRD 总览，各子系统详见子文档
 > 发布仓库: https://github.com/FloraSun007/yu-yin
 > 官网下载: https://yuyinmoyu.com
@@ -27,7 +27,7 @@
 | 伪装性 | 多种高仿真办公软件主题，一键切换"工作模式" |
 | 易用性 | 内置直播源与小说源、支持自定义 URL、窗口可拖拽缩放 |
 | 兼容性 | 支持 HLS 直播流 (m3u8)、普通视频 (mp4/webm) 及网页播放 |
-| 轻量化 | 单文件 Portable exe，无需安装，双击即用 |
+| 轻量化 | Portable ZIP 压缩包，无需安装，解压即用 |
 
 ---
 
@@ -39,7 +39,8 @@
 | 前端框架 | React + TypeScript | React 18.x |
 | 构建工具 | Vite | 6.x |
 | 视频播放 | hls.js | 1.5.x |
-| 打包分发 | electron-builder | 25.x (Portable) |
+| 打包分发 | electron-builder | 25.x (Portable ZIP) |
+| 后端服务 | Fastify + SQLite | 本地 API 服务 |
 
 ---
 
@@ -51,6 +52,7 @@
 | 直播视频模块 | [PRD-livevideo.md](PRD-livevideo.md) | 视频播放、源管理、双播放器架构、数据持久化 |
 | 伪装主题系统 | [PRD-themes.md](PRD-themes.md) | 主题列表、切换行为、解锁机制、各主题内容规格 |
 | 小说阅读模块 | [PRD-novel.md](PRD-novel.md) | 内置起点、七猫等小说官网，webview 在线阅读 |
+| 积分与商业化 | [PRD-monetization.md](PRD-monetization.md) | 积分体系、推荐码、付费授权、支付宝支付 |
 
 ---
 
@@ -92,13 +94,14 @@
 | `npm run build` | 编译 TypeScript + 构建 Vite |
 | `npm run dist` | 构建并打包为 Portable 可执行文件 |
 
-打包格式：Windows Portable（单文件 .exe，x64），应用 ID：`com.yuyin.app`，输出目录：`release/`。
+打包格式：Windows Portable ZIP（免安装压缩包，x64），应用 ID：`com.yuyin.app`，输出目录：`release/`。
+额外资源文件（`extraResources`）：`icon.ico`（应用图标）、`alipay-qr.png`（收款二维码），打包到 `process.resourcesPath` 目录。
 
 ### 5.1 发布流程
 
-1. 更新代码后执行 `npm run dist` 生成新版本 exe
+1. 更新代码后执行 `npm run dist` 生成新版本 ZIP
 2. 提交代码到 GitHub：`git add -A` → `git commit` → `git push`
-3. 在 GitHub Releases 页面创建新 tag（如 `v1.0.0`），上传 exe 和使用说明
+3. 在 GitHub Releases 页面创建新 tag（如 `v1.0.0`），上传 ZIP 和使用说明
 
 ### 5.2 国内打包环境
 
@@ -112,7 +115,8 @@ ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/
 - **官网下载页**（面向普通用户）：https://yuyinmoyu.com
 - **GitHub Releases**（开发者/备份）：https://github.com/FloraSun007/yu-yin/releases
 - 官网由 GitHub Pages 托管，源文件为 `docs/` 目录，随仓库自动部署
-- 用户下载 Portable exe 后双击运行，Windows 可能提示"未知发布者"（无代码签名证书）
+- 用户下载 ZIP 解压后双击运行，首次启动自动创建桌面快捷方式
+- Windows 可能提示"未知发布者"（无代码签名证书），ZIP 方式可跳过部分安全拦截
 - 发布包附带 `使用说明.txt`
 
 ---
@@ -120,6 +124,7 @@ ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/
 ## 6. 官网设计
 
 官网由 GitHub Pages 托管，源文件为 `docs/` 目录，包含首页 (`index.html`) 和使用文档 (`help.html`)。
+自定义域名：`yuyinmoyu.com`（阿里云注册，DNS 解析已配置，HTTPS 自动启用）。
 
 ### 6.1 技术栈
 
@@ -146,7 +151,7 @@ ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/
 
 - **不展示 GitHub 仓库链接**：全站无 GitHub repo 显示链接（导航栏、Footer、FAQ 等均无仓库入口）
 - **收费文案**：使用「限时免费」替代「完全免费/永久免费」，为未来收费预留空间
-- **下载链接**：直接指向 GitHub Releases 的 exe 文件，通过百度统计追踪下载事件
+- **下载链接**：指向 GitHub Releases 的 ZIP 文件，通过百度统计追踪下载事件
 
 ### 6.3 使用文档 (`help.html`)
 
@@ -186,7 +191,7 @@ ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/
 |------|------|
 | 免费描述 | 统一使用「限时免费，无隐藏收费」，禁止使用「完全免费」「永久免费」 |
 | GitHub 链接 | 官网首页和文档页均不展示 GitHub 仓库链接 |
-| 下载入口 | 指向 `https://github.com/FloraSun007/yu-yin/releases/download/v1.0.0/yuyin1.0.0.exe` |
+| 下载入口 | 指向 GitHub Releases 的 ZIP 文件 |
 | 联系邮箱 | `cfsun2022@gmail.com` |
 
 ---
@@ -201,3 +206,4 @@ ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/
 | 1.0.0 | 2026-05-14 | 首次正式发布：应用图标、README、使用说明、GitHub Releases 发布流程 |
 | 1.0.1 | 2026-05-16 | 新增 GitHub Pages 官网下载页，PRD 文档同步更新 |
 | 1.1.0 | 2026-05-19 | 官网全面改版：新增使用文档页(help.html)、关于我们弹窗、百度统计、实际应用截图；文案改为「限时免费」；移除所有 GitHub 仓库展示链接 |
+| 1.2.0 | 2026-05-28 | 新增积分与商业化系统：积分体系、推荐码、支付宝收款码支付、付费授权；打包格式改为 Portable ZIP；自定义域名 yuyinmoyu.com 上线；桌面快捷方式自动创建 |

@@ -1,7 +1,7 @@
 # 外壳与窗口系统 PRD
 
-> 版本: 1.0.0
-> 更新日期: 2026-05-14
+> 版本: 1.1.0
+> 更新日期: 2026-05-28
 > 所属项目: 鱼隐 (YuYin)
 > 主文档: [PRD.md](PRD.md)
 
@@ -130,6 +130,14 @@
 | `stopDrag()` | Renderer → Main | 停止窗口拖拽 |
 | `onToggleMode(cb)` | Main → Renderer | 监听模式切换快捷键 |
 | `onOpacityChanged(cb)` | Main → Renderer | 监听透明度变化 |
+| `pointsIsFirstLaunch()` | Renderer → Main | 检测是否首次启动 |
+| `pointsInit(referralCode?)` | Renderer → Main | 初始化积分账户 |
+| `pointsGetStatus()` | Renderer → Main | 获取积分状态 |
+| `pointsStartConsume()` | Renderer → Main | 开始积分消耗 |
+| `pointsStopConsume()` | Renderer → Main | 停止积分消耗 |
+| `pointsPurchaseCreate(productId)` | Renderer → Main | 创建购买订单 |
+| `pointsPurchaseStatus(tradeNo)` | Renderer → Main | 查询订单状态 |
+| `pointsPurchaseClaim(tradeNo)` | Renderer → Main | 确认支付（用户自报） |
 
 ---
 
@@ -156,19 +164,37 @@
 
 ### 8.2 打包配置
 
-- **打包格式**：Windows Portable（单文件 .exe，无需安装）
+- **打包格式**：Windows Portable ZIP（免安装压缩包）
 - **目标架构**：x64
 - **应用 ID**：`com.yuyin.app`
 - **产品名称**：鱼隐
 - **输出目录**：`release/`
-- **应用图标**：`assets/icon.ico`（蓝色圆形，程序生成）
+- **应用图标**：`assets/icon.ico`（蓝色鱼形图标）
 - **国内镜像**：`.npmrc` 配置 `ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/`
+- **额外资源**：`icon.ico`、`alipay-qr.png` 通过 `extraResources` 打包到 `process.resourcesPath`
 
 ### 8.3 开发模式特性
 
 - 连接 Vite Dev Server (`localhost:5173`) 实现热更新
 - 连接失败时自动回退到构建产物
 - 自动打开 DevTools（detach 模式）
+
+### 8.4 自定义协议
+
+注册 `local-assets://` 协议，用于在渲染进程中加载资源文件：
+
+- 开发环境：从 `assets/` 目录读取
+- 打包环境：从 `process.resourcesPath` 读取
+- 用途：加载收款二维码图片等资源
+
+### 8.5 桌面快捷方式
+
+首次启动时（仅打包后），自动在桌面创建快捷方式：
+
+- 快捷方式名称：鱼隐
+- 图标：`process.resourcesPath/icon.ico`
+- AppUserModelId：`com.yuyin.app`
+- 已存在则跳过创建
 
 ---
 
@@ -202,3 +228,4 @@
 | 0.1.0 | 2026-05-13 | 初始文档 |
 | 0.2.0 | 2026-05-14 | 模块化拆分 |
 | 1.0.0 | 2026-05-14 | 新增模块 Tab 布局、应用图标、国内镜像配置、发布流程 |
+| 1.1.0 | 2026-05-28 | 新增积分系统 IPC、自定义协议、桌面快捷方式、打包格式改为 ZIP |
